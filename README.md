@@ -4,5 +4,6 @@
 - Store both gift ideas and already given gifts (so you never give the same gift again!)
 - Select gift giving occasions (holidays) from pre-specified list or add yours
 - Get notifications of upcoming events
+
 Additional tools used: mssql, entity framework
 
