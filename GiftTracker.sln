@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2005
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiftTracker", "GiftTracker\GiftTracker.csproj", "{93728DF8-4CBE-4108-BA5C-A5329D39E41E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{93728DF8-4CBE-4108-BA5C-A5329D39E41E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93728DF8-4CBE-4108-BA5C-A5329D39E41E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93728DF8-4CBE-4108-BA5C-A5329D39E41E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93728DF8-4CBE-4108-BA5C-A5329D39E41E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7FCD0548-3C8C-4F49-B054-9CCED28E2DA1}
+	EndGlobalSection
+EndGlobal
