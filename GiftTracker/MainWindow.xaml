@@ -5,8 +5,60 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GiftTracker"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="350">
+      
     <Grid>
         
+        <UniformGrid Columns="2" Margin="5,0">
+            <Canvas x:Name="c1"/>
+            <Canvas/>
+        </UniformGrid>
+        <TabControl x:Name="giftsTabControl" Margin="0,0,0,0">
+            <TabItem x:Name="peopleTabItem" Header="People" Width="{Binding ElementName=c1, Path=ActualWidth}">
+                <Grid x:Name="peopleGrid" Background="#FFE5E5E5">
+                    <DataGrid x:Name="peopleDataGrid" GridLinesVisibility="Horizontal" HeadersVisibility="None" AutoGenerateColumns="False" Margin="10" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Width="3*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Source="{Binding Image}">
+                                            <Image.Clip>
+                                            <EllipseGeometry Center="170,90" RadiusX="90" RadiusY="90" />
+                                            </Image.Clip>
+                                        </Image>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Width="7*"
+                                Binding="{Binding Path=Name}"
+                                Header="Name" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="occasionsTabItem" Header="Occasions" Width="{Binding ElementName=c1, Path=ActualWidth}">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="occasionsDataGrid" GridLinesVisibility="Horizontal" HeadersVisibility="None" AutoGenerateColumns="False" Margin="10" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Width="3*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Source="{Binding Image}">
+                                            <Image.Clip>
+                                                <EllipseGeometry Center="170,90" RadiusX="90" RadiusY="90" />
+                                            </Image.Clip>
+                                        </Image>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Width="7*"
+                                Binding="{Binding Path=Name}"
+                                Header="Name" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
     </Grid>
 </Window>

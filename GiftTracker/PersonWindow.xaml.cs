@@ -10,17 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace GiftTracker
 {
-    public partial class MainWindow : Window
+    /// <summary>
+    /// Interaction logic for PersonWindow.xaml
+    /// </summary>
+    public partial class PersonWindow : Window
     {
-        public MainWindow()
+        public PersonWindow()
         {
-            InitializeComponent();  
-            occasionsDataGrid.Items.Add(new object());
+            InitializeComponent();
         }
     }
 }
