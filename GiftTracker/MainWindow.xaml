@@ -6,7 +6,31 @@
         xmlns:local="clr-namespace:GiftTracker"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="350">
-      
+
+    <Window.Resources>
+        <Style x:Key="GridStyle" TargetType="{x:Type DataGrid}" >
+            <Setter Property="AutoGenerateColumns" Value="False" />
+            <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="GridLinesVisibility" Value="Horizontal" />
+            <Setter Property="HeadersVisibility" Value="None" />
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="SelectionMode" Value="Single" />
+        </Style>
+
+        <DataTemplate x:Key="ImageCellTemplate">
+            <Image Source="{Binding Image}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Image.Clip>
+                    <EllipseGeometry Center="50,50" RadiusX="40" RadiusY="40" />
+                </Image.Clip>
+            </Image>
+        </DataTemplate>
+
+        <DataTemplate x:Key="NameCellTemplate">
+            <TextBlock Text="{Binding Path=Name}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </DataTemplate>
+
+    </Window.Resources>
+
     <Grid>
         
         <UniformGrid Columns="2" Margin="5,0">
@@ -15,45 +39,22 @@
         </UniformGrid>
         <TabControl x:Name="giftsTabControl" Margin="0,0,0,0">
             <TabItem x:Name="peopleTabItem" Header="People" Width="{Binding ElementName=c1, Path=ActualWidth}">
+                
                 <Grid x:Name="peopleGrid" Background="#FFE5E5E5">
-                    <DataGrid x:Name="peopleDataGrid" GridLinesVisibility="Horizontal" HeadersVisibility="None" AutoGenerateColumns="False" Margin="10" IsReadOnly="True">
+                    <DataGrid x:Name="peopleDataGrid" ItemsSource="{Binding}" Style="{StaticResource GridStyle}" >
                         <DataGrid.Columns>
-                            <DataGridTemplateColumn Width="3*">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Image Source="{Binding Image}">
-                                            <Image.Clip>
-                                            <EllipseGeometry Center="170,90" RadiusX="90" RadiusY="90" />
-                                            </Image.Clip>
-                                        </Image>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTextColumn Width="7*"
-                                Binding="{Binding Path=Name}"
-                                Header="Name" />
+                            <DataGridTemplateColumn Width="100" CellTemplate="{StaticResource ImageCellTemplate}" />
+                            <DataGridTemplateColumn Width="*" CellTemplate="{StaticResource NameCellTemplate}" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
             </TabItem>
             <TabItem x:Name="occasionsTabItem" Header="Occasions" Width="{Binding ElementName=c1, Path=ActualWidth}">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="occasionsDataGrid" GridLinesVisibility="Horizontal" HeadersVisibility="None" AutoGenerateColumns="False" Margin="10" IsReadOnly="True">
+                    <DataGrid x:Name="occasionsDataGrid" ItemsSource="{Binding}" Style="{StaticResource GridStyle}" >
                         <DataGrid.Columns>
-                            <DataGridTemplateColumn Width="3*">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Image Source="{Binding Image}">
-                                            <Image.Clip>
-                                                <EllipseGeometry Center="170,90" RadiusX="90" RadiusY="90" />
-                                            </Image.Clip>
-                                        </Image>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTextColumn Width="7*"
-                                Binding="{Binding Path=Name}"
-                                Header="Name" />
+                            <DataGridTemplateColumn Width="100" CellTemplate="{StaticResource ImageCellTemplate}" />
+                            <DataGridTemplateColumn Width="*" CellTemplate="{StaticResource NameCellTemplate}" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

@@ -19,7 +19,7 @@ namespace GiftTracker
     /// </summary>
     public partial class PersonWindow : Window
     {
-        public PersonWindow()
+        public PersonWindow(object item)
         {
             InitializeComponent();
         }
