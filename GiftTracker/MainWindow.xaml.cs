@@ -13,15 +13,31 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace GiftTracker
 {
     public partial class MainWindow : Window
     {
+        private NotifyIcon notifyIcon;
+        private WindowState storedWindowState = WindowState.Normal;
+
         public MainWindow()
         {
             InitializeComponent();
-            //testing...
+            notifyIcon = new NotifyIcon
+            {
+                BalloonTipText = "The app has been minimised. Click the tray icon to show.",
+                BalloonTipTitle = "GiftTracker",
+                Text = "Gift tracking app",
+                Icon = new System.Drawing.Icon(@"..\..\gift.ico")
+            };
+
+            notifyIcon.Click += NotifyIcon_Click;
+
+
+
             List<Person> ppl = new List<Person>();
             List<Occasion> occ = new List<Occasion>();
 
@@ -55,7 +71,7 @@ namespace GiftTracker
                 new Gift() {Occasion = Birthday, Owner = Vasya, Name="3"}
             };
 
-            Petya.Gifts = gfts.Where(x=> x.Owner == Petya).ToList();
+            Petya.Gifts = gfts.Where(x => x.Owner == Petya).ToList();
             Petya.Occasions = occ;
             Vasya.Gifts = gfts.Where(x => x.Owner == Vasya).ToList(); ;
             Vasya.Occasions = occ;
@@ -72,17 +88,15 @@ namespace GiftTracker
 
         }
 
-
-        private void DataGrid_MouseLeftButtonUp<T>(object sender, MouseButtonEventArgs e)
+        void DataGrid_MouseLeftButtonUp<T>(object sender, MouseButtonEventArgs e)
         {
-            T item = (T)((DataGrid)sender).SelectedItem;
-            ((DataGrid)sender).UnselectAll();
+            T item = (T)((System.Windows.Controls.DataGrid)sender).SelectedItem;
+            ((System.Windows.Controls.DataGrid)sender).UnselectAll();
             if (item != null)
             {
                 new DetailsWindow(item).ShowDialog();
             }
         }
-
 
         private byte[] BitmapSourceToByteArray(string image)
         {
@@ -96,7 +110,41 @@ namespace GiftTracker
             }
         }
 
+        private void NotifyIcon_Click(object sender, EventArgs e)
+        {
+            this.Show();
+            WindowState = storedWindowState;
+        }
 
+        private void OnClose(object sender, CancelEventArgs args)
+        {
+            notifyIcon.Dispose();
+            notifyIcon = null;
+        }
+
+        private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs args)
+        {
+            if (notifyIcon != null)
+            {
+                notifyIcon.Visible = !IsVisible;
+            }
+        }
+
+        private void OnStateChanged(object sender, EventArgs args)
+        {
+            if (WindowState == WindowState.Minimized)
+            {
+                this.Hide();
+                if (notifyIcon != null)
+                {
+                    notifyIcon.ShowBalloonTip(200);
+                }
+            }
+            else
+            {
+                storedWindowState = WindowState;
+            }
+        }
     }
 
     public class Person
@@ -113,7 +161,7 @@ namespace GiftTracker
         public int Id { get; set; }
         public string Name { get; set; }
         public byte[] Image { get; set; }
-        public ICollection<Person> People {get; set;}
+        public ICollection<Person> People { get; set; }
         public ICollection<Gift> Gifts { get; set; }
     }
 
