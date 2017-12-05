@@ -24,16 +24,45 @@ namespace GiftTracker
             //testing...
             List<Person> ppl = new List<Person>();
             List<Occasion> occ = new List<Occasion>();
-            var c = new Person
+
+            var Vasya = new Person
             {
-                Image = BitmapSourceToByteArray(@"cat.JPG")
+                Name = "Vasya",
+                Image = BitmapSourceToByteArray(@"cat.JPG"),
+                Gifts = new List<Gift>()
             };
-            var cf = new Occasion
+            var Petya = new Person
             {
-                Image = BitmapSourceToByteArray(@"cat.JPG")
+                Name = "Petya",
+                Image = BitmapSourceToByteArray(@"cat.JPG"),
+                Gifts = new List<Gift>()
             };
-            ppl.Add(c);
-            occ.Add(cf);
+            var NewYear = new Occasion
+            {
+                Image = BitmapSourceToByteArray(@"cat.JPG"),
+                Name = "New Year"
+
+            };
+            var Birthday = new Occasion
+            {
+                Name = "Birthday"
+            };
+            var gfts = new List<Gift>
+            {
+                new Gift() { Occasion = NewYear, Owner = Vasya, Name="1"},
+                new Gift() {Occasion = NewYear, Owner = Petya, Name="1"},
+                new Gift() {Occasion = NewYear, Owner = Vasya, Name="2"},
+                new Gift() {Occasion = Birthday, Owner = Vasya, Name="3"}
+            };
+
+            Petya.Gifts = gfts.Where(x=> x.Owner == Petya).ToList();
+            Petya.Occasions = occ;
+            Vasya.Gifts = gfts.Where(x => x.Owner == Vasya).ToList(); ;
+            Vasya.Occasions = occ;
+            ppl.Add(Petya);
+            ppl.Add(Vasya);
+            occ.Add(Birthday);
+            occ.Add(NewYear);
             peopleDataGrid.DataContext = ppl;
             peopleDataGrid.ItemsSource = ppl;
             occasionsDataGrid.DataContext = occ;
@@ -47,8 +76,11 @@ namespace GiftTracker
         private void DataGrid_MouseLeftButtonUp<T>(object sender, MouseButtonEventArgs e)
         {
             T item = (T)((DataGrid)sender).SelectedItem;
-            new PersonWindow(item).ShowDialog();
             ((DataGrid)sender).UnselectAll();
+            if (item != null)
+            {
+                new DetailsWindow(item).ShowDialog();
+            }
         }
 
 
@@ -69,13 +101,28 @@ namespace GiftTracker
 
     public class Person
     {
-        public string Name { get; set; } = "Vasya";
+        public int Id { get; set; }
+        public string Name { get; set; }
         public byte[] Image { get; set; }
+        public ICollection<Occasion> Occasions { get; set; }
+        public ICollection<Gift> Gifts { get; set; }
     }
 
     public class Occasion
     {
-        public string Name { get; set; } = "New Year";
+        public int Id { get; set; }
+        public string Name { get; set; }
         public byte[] Image { get; set; }
+        public ICollection<Person> People {get; set;}
+        public ICollection<Gift> Gifts { get; set; }
+    }
+
+    public class Gift
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public byte[] Image { get; set; }
+        public Person Owner { get; set; }
+        public Occasion Occasion { get; set; }
     }
 }

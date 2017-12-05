@@ -14,14 +14,16 @@ using System.Windows.Shapes;
 
 namespace GiftTracker
 {
-    /// <summary>
-    /// Interaction logic for PersonWindow.xaml
-    /// </summary>
-    public partial class PersonWindow : Window
+    public partial class AddOrEditGiftWindow : Window
     {
-        public PersonWindow(object item)
+        public AddOrEditGiftWindow()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

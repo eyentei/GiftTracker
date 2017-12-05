@@ -5,18 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GiftTracker"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="350">
+        Title="MainWindow" Height="430" Width="350">
 
     <Window.Resources>
-        <Style x:Key="GridStyle" TargetType="{x:Type DataGrid}" >
-            <Setter Property="AutoGenerateColumns" Value="False" />
-            <Setter Property="IsReadOnly" Value="True" />
-            <Setter Property="GridLinesVisibility" Value="Horizontal" />
-            <Setter Property="HeadersVisibility" Value="None" />
-            <Setter Property="Margin" Value="10" />
-            <Setter Property="SelectionMode" Value="Single" />
-        </Style>
-
         <DataTemplate x:Key="ImageCellTemplate">
             <Image Source="{Binding Image}" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Image.Clip>
@@ -28,35 +19,42 @@
         <DataTemplate x:Key="NameCellTemplate">
             <TextBlock Text="{Binding Path=Name}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </DataTemplate>
-
     </Window.Resources>
 
     <Grid>
-        
         <UniformGrid Columns="2" Margin="5,0">
             <Canvas x:Name="c1"/>
             <Canvas/>
         </UniformGrid>
         <TabControl x:Name="giftsTabControl" Margin="0,0,0,0">
             <TabItem x:Name="peopleTabItem" Header="People" Width="{Binding ElementName=c1, Path=ActualWidth}">
-                
                 <Grid x:Name="peopleGrid" Background="#FFE5E5E5">
-                    <DataGrid x:Name="peopleDataGrid" ItemsSource="{Binding}" Style="{StaticResource GridStyle}" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="310"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <DataGrid x:Name="peopleDataGrid" ItemsSource="{Binding}" Style="{StaticResource ReadOnlyDataGridStyle}" Margin="10" Grid.Row="0" >
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Width="100" CellTemplate="{StaticResource ImageCellTemplate}" />
                             <DataGridTemplateColumn Width="*" CellTemplate="{StaticResource NameCellTemplate}" />
                         </DataGrid.Columns>
                     </DataGrid>
+                    <Button Content="Add a new person" Margin="10" Grid.Row="1"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="occasionsTabItem" Header="Occasions" Width="{Binding ElementName=c1, Path=ActualWidth}">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="occasionsDataGrid" ItemsSource="{Binding}" Style="{StaticResource GridStyle}" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="310"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <DataGrid x:Name="occasionsDataGrid" ItemsSource="{Binding}" Style="{StaticResource ReadOnlyDataGridStyle}" Grid.Row="0" >
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Width="100" CellTemplate="{StaticResource ImageCellTemplate}" />
                             <DataGridTemplateColumn Width="*" CellTemplate="{StaticResource NameCellTemplate}" />
                         </DataGrid.Columns>
                     </DataGrid>
+                    <Button Content="Add a new occasion" Margin="10" Grid.Row="1"/>
                 </Grid>
             </TabItem>
         </TabControl>
