@@ -59,7 +59,12 @@
                 </Grid>
             </TabItem>
             <TabItem x:Name="settingsTabItem" Header="Settings" Width="{Binding ElementName=c1, Path=ActualWidth}">
-                
+                <Grid>
+                    <CheckBox x:Name="notificationsCheckBox" Content="Enable notifications" HorizontalAlignment="Left" Margin="28,19,0,0" VerticalAlignment="Top" Width="198"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="28,85,0,0" VerticalAlignment="Top" Width="198" IsEnabled="{Binding ElementName=notificationsCheckBox, Path=IsChecked}"/>
+                    <Label Content="Notify me:" HorizontalAlignment="Left" Margin="28,54,0,0" VerticalAlignment="Top" Width="124"/>
+
+                </Grid>
             </TabItem>
         </TabControl>
 
