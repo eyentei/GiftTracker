@@ -147,30 +147,5 @@ namespace GiftTracker
         }
     }
 
-    public class Person
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public byte[] Image { get; set; }
-        public ICollection<Occasion> Occasions { get; set; }
-        public ICollection<Gift> Gifts { get; set; }
-    }
-
-    public class Occasion
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public byte[] Image { get; set; }
-        public ICollection<Person> People { get; set; }
-        public ICollection<Gift> Gifts { get; set; }
-    }
-
-    public class Gift
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public byte[] Image { get; set; }
-        public Person Owner { get; set; }
-        public Occasion Occasion { get; set; }
-    }
+    
 }

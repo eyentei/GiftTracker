@@ -112,5 +112,11 @@
   <ItemGroup>
     <Resource Include="gift.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GiftTrackerClasses\GiftTrackerClasses.csproj">
+      <Project>{84dc2d50-c9b1-4e39-a031-7e352a97fb26}</Project>
+      <Name>GiftTrackerClasses</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
