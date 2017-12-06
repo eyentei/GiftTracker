@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiftTracker", "GiftTracker\GiftTracker.csproj", "{93728DF8-4CBE-4108-BA5C-A5329D39E41E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiftTrackerClasses", "GiftTrackerClasses\GiftTrackerClasses.csproj", "{84DC2D50-C9B1-4E39-A031-7E352A97FB26}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiftTrackerClassLibrary", "GiftTrackerClasses\GiftTrackerClassLibrary.csproj", "{84DC2D50-C9B1-4E39-A031-7E352A97FB26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

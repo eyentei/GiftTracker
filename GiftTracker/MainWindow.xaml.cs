@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Forms;
 using System.ComponentModel;
+using GiftTrackerClasses;
 
 namespace GiftTracker
 {
@@ -44,18 +45,15 @@ namespace GiftTracker
             var Vasya = new Person
             {
                 Name = "Vasya",
-                Image = BitmapSourceToByteArray(@"cat.JPG"),
                 Gifts = new List<Gift>()
             };
             var Petya = new Person
             {
                 Name = "Petya",
-                Image = BitmapSourceToByteArray(@"cat.JPG"),
                 Gifts = new List<Gift>()
             };
             var NewYear = new Occasion
             {
-                Image = BitmapSourceToByteArray(@"cat.JPG"),
                 Name = "New Year"
 
             };
