@@ -7,15 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="430" Width="350"
         Closing="OnClose" StateChanged="OnStateChanged" IsVisibleChanged="OnIsVisibleChanged"
-        Icon="gift.ico">
+        Icon="Images\gift.ico">
 
     <Window.Resources>
         <DataTemplate x:Key="ImageCellTemplate">
-            <Image Source="{Binding Image}" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Image.Clip>
-                    <EllipseGeometry Center="50,50" RadiusX="40" RadiusY="40" />
-                </Image.Clip>
-            </Image>
+            <Ellipse Width="90" Height="90"/>
         </DataTemplate>
 
         <DataTemplate x:Key="NameCellTemplate">
@@ -40,7 +36,7 @@
                             <DataGridTemplateColumn Width="*" CellTemplate="{StaticResource NameCellTemplate}" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button Content="Add a new person" Margin="10" Grid.Row="1"/>
+                    <Button x:Name="addPersonButton" Content="Add a new person" Margin="10" Grid.Row="1" Click="AddButton_Click" Tag="Person"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="occasionsTabItem" Header="Occasions" Width="{Binding ElementName=c1, Path=ActualWidth}">
@@ -55,7 +51,7 @@
                             <DataGridTemplateColumn Width="*" CellTemplate="{StaticResource NameCellTemplate}" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button Content="Add a new occasion" Margin="10" Grid.Row="1"/>
+                    <Button x:Name="addOccasionButton" Content="Add a new occasion" Margin="10" Grid.Row="1" Click="AddButton_Click" Tag="Occasion"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="settingsTabItem" Header="Settings" Width="{Binding ElementName=c1, Path=ActualWidth}">

@@ -13,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Forms;
 using System.ComponentModel;
 using GiftTrackerClasses;
 
@@ -21,23 +20,13 @@ namespace GiftTracker
 {
     public partial class MainWindow : Window
     {
-        private NotifyIcon notifyIcon;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
         private WindowState storedWindowState = WindowState.Normal;
 
         public MainWindow()
         {
             InitializeComponent();
-            notifyIcon = new NotifyIcon
-            {
-                BalloonTipText = "The app has been minimised. Click the tray icon to show.",
-                BalloonTipTitle = "GiftTracker",
-                Text = "Gift tracking app",
-                Icon = new System.Drawing.Icon(@"..\..\gift.ico")
-            };
-
-            notifyIcon.Click += NotifyIcon_Click;
-
-
+            SetNotifyIcon();
 
             List<Person> ppl = new List<Person>();
             List<Occasion> occ = new List<Occasion>();
@@ -45,21 +34,26 @@ namespace GiftTracker
             var Vasya = new Person
             {
                 Name = "Vasya",
-                Gifts = new List<Gift>()
+                Gifts = new List<Gift>(),
+                Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\gift.ico")
+                
             };
             var Petya = new Person
             {
                 Name = "Petya",
-                Gifts = new List<Gift>()
+                Gifts = new List<Gift>(),
+                Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\gift.ico")
             };
             var NewYear = new Occasion
             {
-                Name = "New Year"
+                Name = "New Year",
+                Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\gift.ico")
 
             };
             var Birthday = new Occasion
             {
-                Name = "Birthday"
+                Name = "Birthday",
+                Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\gift.ico")
             };
             var gfts = new List<Gift>
             {
@@ -96,22 +90,23 @@ namespace GiftTracker
             }
         }
 
-        private byte[] BitmapSourceToByteArray(string image)
+        private void SetNotifyIcon()
         {
-            BitmapSource bSource = new BitmapImage(new Uri(image, UriKind.Relative));
-            using (var stream = new MemoryStream())
+            notifyIcon = new System.Windows.Forms.NotifyIcon
             {
-                var encoder = new PngBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create(bSource));
-                encoder.Save(stream);
-                return stream.ToArray();
-            }
-        }
+                BalloonTipText = "The app has been minimised. Click the tray icon to show.",
+                BalloonTipTitle = "GiftTracker",
+                Text = "Gift tracking app",
+                Icon = new System.Drawing.Icon(@"..\..\Images\gift.ico")
+            };
 
-        private void NotifyIcon_Click(object sender, EventArgs e)
-        {
-            this.Show();
-            WindowState = storedWindowState;
+            notifyIcon.Click += (sender, e) =>
+            {
+                Show();
+                WindowState = storedWindowState;
+            };
+
+
         }
 
         private void OnClose(object sender, CancelEventArgs args)
@@ -141,6 +136,22 @@ namespace GiftTracker
             else
             {
                 storedWindowState = WindowState;
+            }
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            var tag = ((Button)sender).Tag.ToString();
+            switch (tag)
+            {
+                case "Person":
+                    new AddOrEditPersonWindow().ShowDialog();
+                    break;
+                case "Occasion":
+                    new AddOrEditOccasionWindow().ShowDialog();
+                    break;
+                default:
+                    break;
             }
         }
     }

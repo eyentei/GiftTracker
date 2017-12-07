@@ -12,5 +12,15 @@
             <Setter Property="Margin" Value="10" />
             <Setter Property="SelectionMode" Value="Single" />
         </Style>
+
+        <Style TargetType="Ellipse">
+            <Setter Property="Stretch" Value="UniformToFill"/>
+            <Setter Property="Fill">
+                <Setter.Value>
+                    <ImageBrush ImageSource="{Binding Image}"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
     </Application.Resources>
 </Application>
