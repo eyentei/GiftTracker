@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GiftTrackerClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,11 +19,13 @@ namespace GiftTracker
     { 
         Person CurrentPerson { get; set; }
         Occasion CurrentOccasion { get; set; }
+        Context context;
 
-        public DetailsWindow(object item)
+        public DetailsWindow(object item, Context context)
         {
             InitializeComponent();
             this.SizeToContent = SizeToContent.WidthAndHeight;
+            this.context = context;
 
             if (item is Person person)
             {
@@ -68,7 +71,7 @@ namespace GiftTracker
         private void PlusButtonClicked(object sender, RoutedEventArgs e)
         {
 
-            new AddOrEditGiftWindow().ShowDialog();
+            new AddOrEditGiftWindow(context).ShowDialog();
         
         }
     }

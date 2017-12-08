@@ -34,7 +34,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -60,12 +67,26 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="AddOrEditOccasionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddOrEditPersonWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="AddOrEditGiftWindow.xaml.cs">
       <DependentUpon>AddOrEditGiftWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddOrEditOccasionWindow.xaml.cs">
+      <DependentUpon>AddOrEditOccasionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddOrEditPersonWindow.xaml.cs">
+      <DependentUpon>AddOrEditPersonWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -101,6 +122,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -110,13 +132,23 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="gift.ico" />
+    <Resource Include="Images\gift.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GiftTrackerClasses\GiftTrackerClasses.csproj">
+    <ProjectReference Include="..\GiftTrackerClasses\GiftTrackerClassLibrary.csproj">
       <Project>{84dc2d50-c9b1-4e39-a031-7e352a97fb26}</Project>
-      <Name>GiftTrackerClasses</Name>
+      <Name>GiftTrackerClassLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\DefaultUserImages\cat_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\DefaultUserImages\female_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\DefaultUserImages\male_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

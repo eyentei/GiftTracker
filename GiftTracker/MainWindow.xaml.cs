@@ -13,55 +13,55 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Forms;
 using System.ComponentModel;
+using GiftTrackerClasses;
+using System.Data.Entity;
+
 
 namespace GiftTracker
 {
     public partial class MainWindow : Window
     {
-        private NotifyIcon notifyIcon;
+        private Context context;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
         private WindowState storedWindowState = WindowState.Normal;
+        private DataBaseCreation dbc;
 
         public MainWindow()
         {
             InitializeComponent();
-            notifyIcon = new NotifyIcon
-            {
-                BalloonTipText = "The app has been minimised. Click the tray icon to show.",
-                BalloonTipTitle = "GiftTracker",
-                Text = "Gift tracking app",
-                Icon = new System.Drawing.Icon(@"..\..\gift.ico")
-            };
+            SetNotifyIcon();
 
-            notifyIcon.Click += NotifyIcon_Click;
-
-
-
+            context = new Context();
             List<Person> ppl = new List<Person>();
             List<Occasion> occ = new List<Occasion>();
+            dbc = new DataBaseCreation(context);
 
             var Vasya = new Person
             {
                 Name = "Vasya",
-                Image = BitmapSourceToByteArray(@"cat.JPG"),
-                Gifts = new List<Gift>()
+                Birthday = new DateTime(1995, 10, 04),
+                Gifts = new List<Gift>(),
+                Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\gift.ico")
+                
             };
             var Petya = new Person
             {
                 Name = "Petya",
-                Image = BitmapSourceToByteArray(@"cat.JPG"),
-                Gifts = new List<Gift>()
+                Birthday = new DateTime(1996, 04, 14),
+                Gifts = new List<Gift>(),
+                Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\gift.ico")
             };
             var NewYear = new Occasion
             {
-                Image = BitmapSourceToByteArray(@"cat.JPG"),
-                Name = "New Year"
+                Name = "New Year",                
+                Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\gift.ico")
 
             };
             var Birthday = new Occasion
             {
-                Name = "Birthday"
+                Name = "Birthday",
+                Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\gift.ico")
             };
             var gfts = new List<Gift>
             {
@@ -79,6 +79,11 @@ namespace GiftTracker
             ppl.Add(Vasya);
             occ.Add(Birthday);
             occ.Add(NewYear);
+
+            dbc.CreatePerson(ppl);
+            dbc.CreateOccasion(occ);
+            dbc.CreateGifts(gfts);            
+
             peopleDataGrid.DataContext = ppl;
             peopleDataGrid.ItemsSource = ppl;
             occasionsDataGrid.DataContext = occ;
@@ -86,6 +91,7 @@ namespace GiftTracker
             peopleDataGrid.MouseLeftButtonUp += DataGrid_MouseLeftButtonUp<Person>;
             occasionsDataGrid.MouseLeftButtonUp += DataGrid_MouseLeftButtonUp<Occasion>;
 
+            context.SaveChanges();
         }
 
         void DataGrid_MouseLeftButtonUp<T>(object sender, MouseButtonEventArgs e)
@@ -94,26 +100,27 @@ namespace GiftTracker
             ((System.Windows.Controls.DataGrid)sender).UnselectAll();
             if (item != null)
             {
-                new DetailsWindow(item).ShowDialog();
+                new DetailsWindow(item, context).ShowDialog();
             }
         }
 
-        private byte[] BitmapSourceToByteArray(string image)
+        private void SetNotifyIcon()
         {
-            BitmapSource bSource = new BitmapImage(new Uri(image, UriKind.Relative));
-            using (var stream = new MemoryStream())
+            notifyIcon = new System.Windows.Forms.NotifyIcon
             {
-                var encoder = new PngBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create(bSource));
-                encoder.Save(stream);
-                return stream.ToArray();
-            }
-        }
+                BalloonTipText = "The app has been minimised. Click the tray icon to show.",
+                BalloonTipTitle = "GiftTracker",
+                Text = "Gift tracking app",
+                Icon = new System.Drawing.Icon(@"..\..\Images\gift.ico")
+            };
 
-        private void NotifyIcon_Click(object sender, EventArgs e)
-        {
-            this.Show();
-            WindowState = storedWindowState;
+            notifyIcon.Click += (sender, e) =>
+            {
+                Show();
+                WindowState = storedWindowState;
+            };
+
+
         }
 
         private void OnClose(object sender, CancelEventArgs args)
@@ -143,6 +150,22 @@ namespace GiftTracker
             else
             {
                 storedWindowState = WindowState;
+            }
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            var tag = ((Button)sender).Tag.ToString();
+            switch (tag)
+            {
+                case "Person":
+                    new AddOrEditPersonWindow(context).ShowDialog();
+                    break;
+                case "Occasion":
+                    new AddOrEditOccasionWindow(context).ShowDialog();
+                    break;
+                default:
+                    break;
             }
         }
     }

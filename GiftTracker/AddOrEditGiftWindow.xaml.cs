@@ -11,19 +11,21 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Data.Entity;
+using GiftTrackerClasses;
 
 namespace GiftTracker
 {
+    /// <summary>
+    /// Interaction logic for AddOrEditGiftWindow.xaml
+    /// </summary>
     public partial class AddOrEditGiftWindow : Window
     {
-        public AddOrEditGiftWindow()
+        Context context;
+        public AddOrEditGiftWindow(Context context)
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
+            this.context = context;
         }
     }
 }

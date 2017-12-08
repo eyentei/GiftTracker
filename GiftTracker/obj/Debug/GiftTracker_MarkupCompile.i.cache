@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\YaMaha\source\repos\GiftTracker2\GiftTracker\obj\Debug\
+C:\Users\YaMaha\Source\Repos\GiftTracker4\GiftTracker\obj\Debug\
 GiftTracker
 none
 false
 DEBUG;TRACE
-C:\Users\YaMaha\source\repos\GiftTracker2\GiftTracker\App.xaml
-31009469671
+C:\Users\YaMaha\Source\Repos\GiftTracker4\GiftTracker\App.xaml
+5-1588379003
 
-111688854686
-16-848535753
-AddOrEditGiftWindow.xaml;MainWindow.xaml;DetailsWindow.xaml;
+13-1424315808
+19431986969
+AddOrEditGiftWindow.xaml;AddOrEditOccasionWindow.xaml;AddOrEditPersonWindow.xaml;MainWindow.xaml;DetailsWindow.xaml;
 
 True
 

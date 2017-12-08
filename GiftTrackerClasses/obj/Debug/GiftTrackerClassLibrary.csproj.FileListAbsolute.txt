@@ -1,0 +1,11 @@
+C:\Users\YaMaha\Source\Repos\GiftTracker4\GiftTrackerClasses\bin\Debug\GiftTrackerClasses.dll
+C:\Users\YaMaha\Source\Repos\GiftTracker4\GiftTrackerClasses\bin\Debug\GiftTrackerClasses.pdb
+C:\Users\YaMaha\Source\Repos\GiftTracker4\GiftTrackerClasses\obj\Debug\GiftTrackerClassLibrary.csprojResolveAssemblyReference.cache
+C:\Users\YaMaha\Source\Repos\GiftTracker4\GiftTrackerClasses\obj\Debug\GiftTrackerClassLibrary.csproj.CoreCompileInputs.cache
+C:\Users\YaMaha\Source\Repos\GiftTracker4\GiftTrackerClasses\obj\Debug\GiftTrackerClasses.dll
+C:\Users\YaMaha\Source\Repos\GiftTracker4\GiftTrackerClasses\obj\Debug\GiftTrackerClasses.pdb
+C:\Users\YaMaha\Source\Repos\GiftTracker4\GiftTrackerClasses\bin\Debug\GiftTrackerClasses.dll.config
+C:\Users\YaMaha\Source\Repos\GiftTracker4\GiftTrackerClasses\bin\Debug\EntityFramework.dll
+C:\Users\YaMaha\Source\Repos\GiftTracker4\GiftTrackerClasses\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\YaMaha\Source\Repos\GiftTracker4\GiftTrackerClasses\bin\Debug\EntityFramework.xml
+C:\Users\YaMaha\Source\Repos\GiftTracker4\GiftTrackerClasses\bin\Debug\EntityFramework.SqlServer.xml
