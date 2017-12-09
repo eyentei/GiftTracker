@@ -47,9 +47,9 @@
             </Grid>
         </Grid>
         <Label Content="Name" Margin="150,51,150,0" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40" VerticalAlignment="Top"/>
-        <TextBox Margin="100,95,100,0" Grid.Row="1" TextWrapping="Wrap" Height="40" VerticalAlignment="Top"/>
+        <TextBox Name ="textbox_Name" Margin="100,95,100,0" Grid.Row="1" TextWrapping="Wrap" Height="40" VerticalAlignment="Top"/>
         <Label Content="Birthday" Margin="150,140,150,0" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40" VerticalAlignment="Top"/>
-        <DatePicker Margin="100,185,100,0" Grid.Row="1" Height="40" VerticalAlignment="Top"/>
+        <DatePicker Name ="datepicker_Birthday" Margin="100,185,100,0" Grid.Row="1" Height="40" VerticalAlignment="Top"/>
         <Button Content="Save" Margin="150,249,150,0" Grid.Row="1" Click="SaveButton_Click" Height="40" VerticalAlignment="Top"/>
     </Grid>
 </Window>

@@ -23,14 +23,15 @@ namespace GiftTracker
         Person CurrentPerson { get; set; }
         Ellipse SelectedDefaultImage { get; set; }
         string CurrentImage { get; set; }
-        public AddOrEditPersonWindow(Person person = null)
+        Context context;
+        public AddOrEditPersonWindow(Context context)
         {
             InitializeComponent();
-            CurrentPerson = person;
+            CurrentPerson = new Person();
             userImageItems.ItemsSource = Directory.EnumerateFiles(@"..\..\Images\DefaultUserImages", "*.png");
             userImageItems.SelectedIndex = 0;
             userImageItems.Focus();
-
+            this.context = context;
         }
 
 
@@ -59,7 +60,13 @@ namespace GiftTracker
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            // saving to database...
+            CurrentPerson.Name = textbox_Name.Text;
+            CurrentPerson.Image = ImageHelper.BitmapSourceToByteArray(CurrentImage);
+            CurrentPerson.Birthday = new DateTime(int.Parse(datepicker_Birthday.Text.Split('.')[2]),
+                int.Parse(datepicker_Birthday.Text.Split('.')[1]), int.Parse(datepicker_Birthday.Text.Split('.')[0]));
+            context.Person.Add(CurrentPerson);
+            context.SaveChanges();
+            MessageBox.Show("Saved!");
         }
     }
 }
