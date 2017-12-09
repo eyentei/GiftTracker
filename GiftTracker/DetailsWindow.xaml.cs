@@ -16,19 +16,22 @@ using System.Windows.Shapes;
 namespace GiftTracker
 {
     public partial class DetailsWindow : Window
-    { 
+    {
         Person CurrentPerson { get; set; }
         Occasion CurrentOccasion { get; set; }
+        Context context;
 
-        public DetailsWindow(object item)
+        public DetailsWindow(object item, Context context)
         {
             InitializeComponent();
             this.SizeToContent = SizeToContent.WidthAndHeight;
+            this.context = context;
 
             if (item is Person person)
             {
                 CurrentPerson = person;
-            } else if (item is Occasion occasion)
+            }
+            else if (item is Occasion occasion)
             {
                 CurrentOccasion = occasion;
             }
@@ -69,8 +72,8 @@ namespace GiftTracker
         private void PlusButtonClicked(object sender, RoutedEventArgs e)
         {
 
-            new AddOrEditGiftWindow().ShowDialog();
-        
+            new AddOrEditGiftWindow(context).ShowDialog();
+
         }
     }
 }

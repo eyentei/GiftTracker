@@ -15,32 +15,40 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
 using GiftTrackerClasses;
+using System.Data.Entity;
+
 
 namespace GiftTracker
 {
     public partial class MainWindow : Window
     {
+        private Context context;
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private WindowState storedWindowState = WindowState.Normal;
+        private DataBaseCreation dbc;
 
         public MainWindow()
         {
             InitializeComponent();
             SetNotifyIcon();
 
+            context = new Context();
             List<Person> ppl = new List<Person>();
             List<Occasion> occ = new List<Occasion>();
+            dbc = new DataBaseCreation(context);
 
             var Vasya = new Person
             {
                 Name = "Vasya",
+                Birthday = new DateTime(1995, 10, 04),
                 Gifts = new List<Gift>(),
                 Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\gift.ico")
-                
+
             };
             var Petya = new Person
             {
                 Name = "Petya",
+                Birthday = new DateTime(1996, 04, 14),
                 Gifts = new List<Gift>(),
                 Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\gift.ico")
             };
@@ -71,6 +79,11 @@ namespace GiftTracker
             ppl.Add(Vasya);
             occ.Add(Birthday);
             occ.Add(NewYear);
+
+            dbc.CreatePerson(ppl);
+            dbc.CreateOccasion(occ);
+            dbc.CreateGifts(gfts);
+
             peopleDataGrid.DataContext = ppl;
             peopleDataGrid.ItemsSource = ppl;
             occasionsDataGrid.DataContext = occ;
@@ -78,6 +91,7 @@ namespace GiftTracker
             peopleDataGrid.MouseLeftButtonUp += DataGrid_MouseLeftButtonUp<Person>;
             occasionsDataGrid.MouseLeftButtonUp += DataGrid_MouseLeftButtonUp<Occasion>;
 
+            context.SaveChanges();
         }
 
         void DataGrid_MouseLeftButtonUp<T>(object sender, MouseButtonEventArgs e)
@@ -86,7 +100,7 @@ namespace GiftTracker
             ((System.Windows.Controls.DataGrid)sender).UnselectAll();
             if (item != null)
             {
-                new DetailsWindow(item).ShowDialog();
+                new DetailsWindow(item, context).ShowDialog();
             }
         }
 
@@ -145,10 +159,10 @@ namespace GiftTracker
             switch (tag)
             {
                 case "Person":
-                    new AddOrEditPersonWindow().ShowDialog();
+                    new AddOrEditPersonWindow(context).ShowDialog();
                     break;
                 case "Occasion":
-                    new AddOrEditOccasionWindow().ShowDialog();
+                    new AddOrEditOccasionWindow(context).ShowDialog();
                     break;
                 default:
                     break;
@@ -156,5 +170,5 @@ namespace GiftTracker
         }
     }
 
-    
+
 }

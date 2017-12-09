@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using GiftTrackerClasses;
 
 namespace GiftTracker
 {
@@ -19,9 +20,11 @@ namespace GiftTracker
     /// </summary>
     public partial class AddOrEditOccasionWindow : Window
     {
-        public AddOrEditOccasionWindow()
+        Context context;
+        public AddOrEditOccasionWindow(Context context)
         {
             InitializeComponent();
+            this.context = context;
         }
     }
 }

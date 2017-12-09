@@ -10,12 +10,13 @@ namespace GiftTrackerClasses
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public DateTime? Birthday { get; set; }
         public byte[] Image { get; set; }
         public ICollection<Occasion> Occasions { get; set; }
         public ICollection<Gift> Gifts { get; set; }
     }
 
-    
 
-    
+
+
 }
