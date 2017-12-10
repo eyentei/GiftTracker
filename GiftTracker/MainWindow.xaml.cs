@@ -40,7 +40,7 @@ namespace GiftTracker
             var Vasya = new Person
             {
                 Name = "Vasya",
-                Birthday = new DateTime(1995, 10, 04),
+                Birthday = new DateTime(1995, 11, 04),
                 Gifts = new List<Gift>(),
                 Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\gift.ico")
 
