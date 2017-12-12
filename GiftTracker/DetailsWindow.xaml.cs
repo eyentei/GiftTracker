@@ -19,9 +19,9 @@ namespace GiftTracker
     {
         Person CurrentPerson { get; set; }
         Occasion CurrentOccasion { get; set; }
-        Context context;
+        GTContext context;
 
-        public DetailsWindow(object item, Context context)
+        public DetailsWindow(object item, GTContext context)
         {
             InitializeComponent();
             this.SizeToContent = SizeToContent.WidthAndHeight;
@@ -46,7 +46,7 @@ namespace GiftTracker
             {
                 this.DataContext = CurrentPerson;
                 gifts = CurrentPerson.Gifts != null ? CurrentPerson.Gifts.ToList() : new List<Gift>();
-                ListCollectionView lcv = new ListCollectionView(CurrentPerson.Gifts.ToList());
+                ListCollectionView lcv = new ListCollectionView(gifts);
                 lcv.GroupDescriptions.Add(new PropertyGroupDescription("Occasion.Name"));
                 detailsDataGrid.ItemsSource = lcv;
                 detailsDataGrid.UnselectAll();

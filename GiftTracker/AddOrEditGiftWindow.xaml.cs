@@ -21,8 +21,8 @@ namespace GiftTracker
     /// </summary>
     public partial class AddOrEditGiftWindow : Window
     {
-        Context context;
-        public AddOrEditGiftWindow(Context context)
+        GTContext context;
+        public AddOrEditGiftWindow(GTContext context)
         {
             InitializeComponent();
             this.context = context;

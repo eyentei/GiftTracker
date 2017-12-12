@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -18,22 +19,36 @@ using System.Windows.Shapes;
 
 namespace GiftTracker
 {
-    public partial class AddOrEditPersonWindow : Window
+    public partial class AddOrEditPersonWindow : Window, INotifyPropertyChanged
     {
         Person CurrentPerson { get; set; }
         Ellipse SelectedDefaultImage { get; set; }
         string CurrentImage { get; set; }
-        Context context;
-        public AddOrEditPersonWindow(Context context)
+        GTRepository<Person> PeopleRepository { get; set; }
+        bool IsEdited { get; set; }
+        public AddOrEditPersonWindow(GTContext context, Person person = null)
         {
             InitializeComponent();
-            CurrentPerson = new Person();
-            userImageItems.ItemsSource = Directory.EnumerateFiles(@"..\..\Images\DefaultUserImages", "*.png");
-            userImageItems.SelectedIndex = 0;
-            userImageItems.Focus();
-            this.context = context;
+            PeopleRepository = new GTRepository<Person>(context);
+            CurrentPerson = person;
+            
+            if (CurrentPerson == null)
+            {
+                IsEdited = false;
+                CurrentPerson = new Person();
+                userImageItems.ItemsSource = Directory.EnumerateFiles(@"..\..\Images\DefaultUserImages", "*.png");
+                userImageItems.SelectedIndex = 0;
+                userImageItems.Focus();
+            } else
+            {
+                IsEdited = true;
+            }
+
+            this.DataContext = CurrentPerson;
+
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
         {
@@ -41,7 +56,6 @@ namespace GiftTracker
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 userImageItems.UnselectAll();
-
                 string fileName = dialog.FileName;
                 userImage.DataContext = fileName;
                 CurrentImage = fileName;
@@ -60,13 +74,17 @@ namespace GiftTracker
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            CurrentPerson.Name = textbox_Name.Text;
             CurrentPerson.Image = ImageHelper.BitmapSourceToByteArray(CurrentImage);
-            CurrentPerson.Birthday = new DateTime(int.Parse(datepicker_Birthday.Text.Split('.')[2]),
-                int.Parse(datepicker_Birthday.Text.Split('.')[1]), int.Parse(datepicker_Birthday.Text.Split('.')[0]));
-            context.Person.Add(CurrentPerson);
-            context.SaveChanges();
+            if (IsEdited)
+            {
+                PeopleRepository.Update(CurrentPerson);
+            } else
+            {
+                PeopleRepository.Add(CurrentPerson);
+            }
             MessageBox.Show("Saved!");
+
+            this.Close();
         }
     }
 }

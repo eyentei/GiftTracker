@@ -22,72 +22,25 @@ namespace GiftTracker
 {
     public partial class MainWindow : Window
     {
-        private Context context;
+        private GTContext context;
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private WindowState storedWindowState = WindowState.Normal;
-        private DataBaseCreation dbc;
 
         public MainWindow()
         {
             InitializeComponent();
             SetNotifyIcon();
-
-            context = new Context();
-            List<Person> ppl = new List<Person>();
-            List<Occasion> occ = new List<Occasion>();
-            dbc = new DataBaseCreation(context);
-
-            var Vasya = new Person
-            {
-                Name = "Vasya",
-                Birthday = new DateTime(1995, 11, 04),
-                Gifts = new List<Gift>(),
-                Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\gift.ico")
-
-            };
-            var Petya = new Person
-            {
-                Name = "Petya",
-                Birthday = new DateTime(1996, 04, 14),
-                Gifts = new List<Gift>(),
-                Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\gift.ico")
-            };
-            var NewYear = new Occasion
-            {
-                Name = "New Year",
-                Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\gift.ico")
-
-            };
-            var Birthday = new Occasion
-            {
-                Name = "Birthday",
-                Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\gift.ico")
-            };
-            var gfts = new List<Gift>
-            {
-                new Gift() { Occasion = NewYear, Owner = Vasya, Name="1"},
-                new Gift() {Occasion = NewYear, Owner = Petya, Name="1"},
-                new Gift() {Occasion = NewYear, Owner = Vasya, Name="2"},
-                new Gift() {Occasion = Birthday, Owner = Vasya, Name="3"}
-            };
-
-            Petya.Gifts = gfts.Where(x => x.Owner == Petya).ToList();
-            Petya.Occasions = occ;
-            Vasya.Gifts = gfts.Where(x => x.Owner == Vasya).ToList(); ;
-            Vasya.Occasions = occ;
-            ppl.Add(Petya);
-            ppl.Add(Vasya);
-            occ.Add(Birthday);
-            occ.Add(NewYear);
-
-            dbc.CreatePerson(ppl);
-            dbc.CreateOccasion(occ);
-            dbc.CreateGifts(gfts);
-
-            peopleDataGrid.DataContext = ppl;
-            peopleDataGrid.ItemsSource = ppl;
-            occasionsDataGrid.DataContext = occ;
-            occasionsDataGrid.ItemsSource = occ;
+            context = new GTContext();
+            var peopleRepo = new GTRepository<Person>(context);
+            var occasionsRepo = new GTRepository<Occasion>(context);
+            
+            var people = peopleRepo.GetAll();
+            var occasions = occasionsRepo.GetAll();
+                       
+            peopleDataGrid.DataContext = people;
+            peopleDataGrid.ItemsSource = people;
+            occasionsDataGrid.DataContext = occasions;
+            occasionsDataGrid.ItemsSource = occasions;
             peopleDataGrid.MouseLeftButtonUp += DataGrid_MouseLeftButtonUp<Person>;
             occasionsDataGrid.MouseLeftButtonUp += DataGrid_MouseLeftButtonUp<Occasion>;
 
@@ -96,8 +49,8 @@ namespace GiftTracker
 
         void DataGrid_MouseLeftButtonUp<T>(object sender, MouseButtonEventArgs e)
         {
-            T item = (T)((System.Windows.Controls.DataGrid)sender).SelectedItem;
-            ((System.Windows.Controls.DataGrid)sender).UnselectAll();
+            T item = (T)((DataGrid)sender).SelectedItem;
+            ((DataGrid)sender).UnselectAll();
             if (item != null)
             {
                 new DetailsWindow(item, context).ShowDialog();
