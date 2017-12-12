@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GiftTrackerClasses
 {
-    public class Person: INotifyPropertyChanged
+    public class Person : INotifyPropertyChanged
     {
         [Required]
         public int Id { get; set; }
@@ -18,8 +18,8 @@ namespace GiftTrackerClasses
         public DateTime? Birthday { get; set; }
         [Required]
         public byte[] Image { get; set; }
-        public ICollection<Occasion> Occasions { get; set; }
-        public ICollection<Gift> Gifts { get; set; }
+        public virtual ICollection<Occasion> Occasions { get; set; }
+        public virtual ICollection<Gift> Gifts { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

@@ -48,12 +48,14 @@ namespace GiftTrackerClasses
                 new Occasion
             {
                 Name = "New Year",
-                Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\gift.ico")
+                Date = new DateTime(2018, 01, 01),
+                Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\DefaultOccasionImages\christmas.png")
 
             },
                 new Occasion
             {
                 Name = "Birthday",
+                Date = new DateTime(2018, 01, 15),
                 Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\gift.ico")
             } };
             

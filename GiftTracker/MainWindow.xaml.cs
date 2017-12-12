@@ -33,16 +33,21 @@ namespace GiftTracker
             context = new GTContext();
             var peopleRepo = new GTRepository<Person>(context);
             var occasionsRepo = new GTRepository<Occasion>(context);
-            
+            var giftsRepo = new GTRepository<Gift>(context);
+
             var people = peopleRepo.GetAll();
             var occasions = occasionsRepo.GetAll();
-                       
+            var gifts = giftsRepo.GetAll();
+
             peopleDataGrid.DataContext = people;
             peopleDataGrid.ItemsSource = people;
             occasionsDataGrid.DataContext = occasions;
             occasionsDataGrid.ItemsSource = occasions;
+            giftsDataGrid.DataContext = gifts;
+            giftsDataGrid.ItemsSource = gifts;
             peopleDataGrid.MouseLeftButtonUp += DataGrid_MouseLeftButtonUp<Person>;
             occasionsDataGrid.MouseLeftButtonUp += DataGrid_MouseLeftButtonUp<Occasion>;
+            giftsDataGrid.MouseLeftButtonUp += DataGrid_MouseLeftButtonUp<Gift>;
 
             context.SaveChanges();
         }
@@ -116,6 +121,9 @@ namespace GiftTracker
                     break;
                 case "Occasion":
                     new AddOrEditOccasionWindow(context).ShowDialog();
+                    break;
+                case "Gift":
+                    new AddOrEditGiftWindow(context).ShowDialog();
                     break;
                 default:
                     break;

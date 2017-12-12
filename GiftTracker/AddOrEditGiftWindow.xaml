@@ -3,10 +3,58 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:validation="clr-namespace:GiftTrackerClasses;assembly=GiftTrackerClasses"
         xmlns:local="clr-namespace:GiftTracker"
         mc:Ignorable="d"
-        Title="AddOrEditGiftWindow" Height="300" Width="300">
-    <Grid>
-        
+        Title="AddOrEditGiftWindow" Height="550" Width="450">
+    <Grid Background="LavenderBlush">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="111*"/>
+                    <ColumnDefinition Width="181*"/>
+                </Grid.ColumnDefinitions>
+                <Ellipse x:Name="userImage" Grid.Column="0" Margin="20,20,0,0" Width="145" HorizontalAlignment="Left" Stretch="UniformToFill" Height="145" VerticalAlignment="Top">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="{Binding Image}"/>
+                    </Ellipse.Fill>
+                </Ellipse>
+
+                <ListView x:Name="userImageItems" Margin="20,35,20,0" Grid.Column="1" Background="Transparent" BorderThickness="0" SelectionChanged="UserImageItems_SelectionChanged" Height="80" VerticalAlignment="Top" SelectionMode="Single">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Ellipse Width="50" Height="50">
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="{Binding}"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel x:Name="wp" Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                </ListView>
+                <Label Content="Select a picture for the gift" HorizontalContentAlignment="Center" Margin="20,0" Grid.Column="1" Height="30" VerticalAlignment="Top"/>
+                <Label Content="Or choose your own" HorizontalContentAlignment="Center" Margin="20,120,20,0" Grid.Column="1" Height="30" VerticalAlignment="Top"/>
+                <Button Margin="20,155,20,0" Content="Browse" Grid.Column="1" Click="BrowseButton_Click" Height="35" VerticalAlignment="Top"/>
+            </Grid>
+        </Grid>
+        <Label Content="Name of the gift" Margin="150,51,150,0" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40" VerticalAlignment="Top"/>
+        <TextBox x:Name="nameTextBox" Margin="100,95,100,0" Grid.Row="1" TextWrapping="Wrap" Height="40" VerticalAlignment="Top" LostFocus="OnLostFocus">
+            <TextBox.Text>
+                <Binding Path="Name" UpdateSourceTrigger="LostFocus">
+                    <Binding.ValidationRules>
+                        <validation:RequiredField/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <Button x:Name="saveButton" Content="Save" Margin="150,249,150,0" Grid.Row="1" Click="SaveButton_Click" Height="40" VerticalAlignment="Top"/>
     </Grid>
 </Window>
