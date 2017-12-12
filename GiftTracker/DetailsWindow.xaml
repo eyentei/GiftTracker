@@ -37,8 +37,14 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <Image x:Name="ItemImage" Source="{Binding Image}" Margin="10,10,0,0" HorizontalAlignment="Left" Width="80" Height="80" VerticalAlignment="Top"/>
-            <Label x:Name="ItemName" Content="{Binding Name}" HorizontalAlignment="Left" Margin="115,36,0,0" VerticalAlignment="Top" Width="148" Height="24"/>
+            <Ellipse x:Name="itemImage" Grid.Column="0"  Margin="10,10,0,0" HorizontalAlignment="Left" Width="80" Height="80">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="{Binding Image}"/>
+                </Ellipse.Fill>
+            </Ellipse>
+            <Label x:Name="itemName" Content="{Binding Name}" HorizontalAlignment="Left" Margin="115,60,0,0" VerticalAlignment="Top" Width="148" Height="30"/>
+            <Button Content="Edit Person" Margin="188,10,10,70" Click="EditButtonClicked"/>
+            <Button Content="Delete Person" Margin="188,45,10,35" Click="DeleteButtonClicked"/>
         </Grid>
         <DataGrid x:Name="detailsDataGrid" Margin="10,10,10,40" Grid.Row="1" Style="{StaticResource ReadOnlyDataGridStyle}">
             <DataGrid.GroupStyle>

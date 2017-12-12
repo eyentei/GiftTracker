@@ -19,13 +19,17 @@ namespace GiftTracker
     {
         Person CurrentPerson { get; set; }
         Occasion CurrentOccasion { get; set; }
-        GTContext context;
+        GTContext Context { get; set; }
+        GTRepository<Person> PeopleRepository { get; set; }
+        GTRepository<Occasion> OccasionsRepository { get; set; }
 
         public DetailsWindow(object item, GTContext context)
         {
             InitializeComponent();
             this.SizeToContent = SizeToContent.WidthAndHeight;
-            this.context = context;
+            Context = context;
+            PeopleRepository = new GTRepository<Person>(context);
+            OccasionsRepository = new GTRepository<Occasion>(context);
 
             if (item is Person person)
             {
@@ -68,12 +72,18 @@ namespace GiftTracker
                 detailsDataGrid.Height = 50;
             }
         }
-
         private void PlusButtonClicked(object sender, RoutedEventArgs e)
         {
-
-            new AddOrEditGiftWindow(context).ShowDialog();
-
+            new AddOrEditGiftWindow(Context).ShowDialog();
+        }
+        private void EditButtonClicked(object sender, RoutedEventArgs e)
+        {
+            new AddOrEditPersonWindow(Context, CurrentPerson).ShowDialog();
+        }
+        private void DeleteButtonClicked(object sender, RoutedEventArgs e)
+        {
+            PeopleRepository.Delete(CurrentPerson);
+            this.Close();
         }
     }
 }

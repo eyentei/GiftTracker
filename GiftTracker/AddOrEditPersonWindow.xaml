@@ -4,8 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GiftTracker"
+        xmlns:validation="clr-namespace:GiftTrackerClasses;assembly=GiftTrackerClasses"
         mc:Ignorable="d"
         Title="AddOrEditPersonWindow" Width="450" Height="550" FontSize="14">
+
     <Grid Background="AliceBlue">
         <Grid.RowDefinitions>
             <RowDefinition Height="200"/>
@@ -19,7 +21,7 @@
                 </Grid.ColumnDefinitions>
                 <Ellipse x:Name="userImage" Grid.Column="0" Margin="20,20,0,0" Width="145" HorizontalAlignment="Left" Stretch="UniformToFill" Height="145" VerticalAlignment="Top">
                     <Ellipse.Fill>
-                        <ImageBrush ImageSource="{Binding}"/>
+                        <ImageBrush ImageSource="{Binding Image}"/>
                     </Ellipse.Fill>
                 </Ellipse>
 
@@ -47,9 +49,25 @@
             </Grid>
         </Grid>
         <Label Content="Name" Margin="150,51,150,0" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40" VerticalAlignment="Top"/>
-        <TextBox Text="{Binding Name}" Margin="100,95,100,0" Grid.Row="1" TextWrapping="Wrap" Height="40" VerticalAlignment="Top"/>
+        <TextBox x:Name="nameTextBox" Margin="100,95,100,0" Grid.Row="1" TextWrapping="Wrap" Height="40" VerticalAlignment="Top" LostFocus="OnLostFocus">
+            <TextBox.Text>
+                <Binding Path="Name" UpdateSourceTrigger="LostFocus">
+                    <Binding.ValidationRules>
+                        <validation:RequiredField/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         <Label Content="Birthday" Margin="150,140,150,0" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40" VerticalAlignment="Top"/>
-        <DatePicker SelectedDate="{Binding Birthday}" Margin="100,185,100,0" Grid.Row="1" Height="40" VerticalAlignment="Top"/>
-        <Button Content="Save" Margin="150,249,150,0" Grid.Row="1" Click="SaveButton_Click" Height="40" VerticalAlignment="Top"/>
+        <DatePicker x:Name="birthdayDatePicker" Margin="100,185,100,0" Grid.Row="1" Height="40" VerticalAlignment="Top" LostFocus="OnLostFocus">
+            <DatePicker.SelectedDate>
+                <Binding Path ="Birthday" UpdateSourceTrigger="LostFocus">
+                    <Binding.ValidationRules>
+                        <validation:DateValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </DatePicker.SelectedDate>
+        </DatePicker>
+        <Button x:Name="saveButton" Content="Save" Margin="150,249,150,0" Grid.Row="1" Click="SaveButton_Click" Height="40" VerticalAlignment="Top"/>
     </Grid>
 </Window>

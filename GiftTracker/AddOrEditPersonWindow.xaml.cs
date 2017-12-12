@@ -16,39 +16,37 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using PropertyChanged;
 
 namespace GiftTracker
 {
-    public partial class AddOrEditPersonWindow : Window, INotifyPropertyChanged
+    public partial class AddOrEditPersonWindow : Window
     {
         Person CurrentPerson { get; set; }
-        Ellipse SelectedDefaultImage { get; set; }
-        string CurrentImage { get; set; }
+        Person TemporaryPerson { get; set; }
         GTRepository<Person> PeopleRepository { get; set; }
         bool IsEdited { get; set; }
         public AddOrEditPersonWindow(GTContext context, Person person = null)
         {
             InitializeComponent();
             PeopleRepository = new GTRepository<Person>(context);
-            CurrentPerson = person;
-            
-            if (CurrentPerson == null)
+            userImageItems.ItemsSource = Directory.EnumerateFiles(@"..\..\Images\DefaultUserImages", "*.png");
+
+            if (person == null)
             {
                 IsEdited = false;
-                CurrentPerson = new Person();
-                userImageItems.ItemsSource = Directory.EnumerateFiles(@"..\..\Images\DefaultUserImages", "*.png");
+                TemporaryPerson = new Person();
                 userImageItems.SelectedIndex = 0;
                 userImageItems.Focus();
-            } else
+            }
+            else
             {
+                CurrentPerson = person;
+                TemporaryPerson = new Person() { Image = person.Image, Name = person.Name, Birthday = person.Birthday};
                 IsEdited = true;
             }
-
-            this.DataContext = CurrentPerson;
-
+            this.DataContext = TemporaryPerson;
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
         {
@@ -57,8 +55,7 @@ namespace GiftTracker
             {
                 userImageItems.UnselectAll();
                 string fileName = dialog.FileName;
-                userImage.DataContext = fileName;
-                CurrentImage = fileName;
+                TemporaryPerson.Image = ImageHelper.BitmapSourceToByteArray(fileName);
             }
         }
 
@@ -66,25 +63,50 @@ namespace GiftTracker
         {
             if (userImageItems.SelectedItems.Count != 0)
             {
-                CurrentImage = userImageItems.SelectedItem.ToString();
-                userImage.DataContext = CurrentImage;
+                TemporaryPerson.Image = ImageHelper.BitmapSourceToByteArray(userImageItems.SelectedItem.ToString());
             }
 
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            CurrentPerson.Image = ImageHelper.BitmapSourceToByteArray(CurrentImage);
-            if (IsEdited)
+            nameTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            birthdayDatePicker.GetBindingExpression(DatePicker.SelectedDateProperty).UpdateSource();
+
+            if (Validation.GetHasError(nameTextBox) || Validation.GetHasError(birthdayDatePicker))
             {
-                PeopleRepository.Update(CurrentPerson);
+                MessageBox.Show("Please provide correct data");
             } else
             {
-                PeopleRepository.Add(CurrentPerson);
-            }
-            MessageBox.Show("Saved!");
-
-            this.Close();
+                if (IsEdited)
+                {
+                    CurrentPerson.Image = TemporaryPerson.Image;
+                    CurrentPerson.Name = TemporaryPerson.Name;
+                    CurrentPerson.Birthday = TemporaryPerson.Birthday;
+                    PeopleRepository.Save();
+                }
+                else
+                {
+                    PeopleRepository.Add(TemporaryPerson);
+                }
+                this.Close();
+            }             
         }
+
+        private void OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox)
+            {
+                TextBox text = sender as TextBox;
+                BindingOperations.GetBindingExpression(text, TextBox.TextProperty).UpdateSource();                
+            }
+            if (sender is DatePicker)
+            {
+                DatePicker date = sender as DatePicker;
+                BindingOperations.GetBindingExpression(date, DatePicker.SelectedDateProperty).UpdateSource();
+            }
+
+        }
+
     }
 }

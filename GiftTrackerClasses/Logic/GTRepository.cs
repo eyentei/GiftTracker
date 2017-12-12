@@ -24,15 +24,9 @@ namespace GiftTrackerClasses
             Save();
         }
 
-        public void Update(T entity)
+        public void Update<U>(T updatedItem, U with)
         {
-            var e = dbSet.Find(entity);
-            if (entity == null)
-            {
-                return;
-            }
-
-            context.Entry(entity).CurrentValues.SetValues(e);
+            context.Entry(updatedItem).CurrentValues.SetValues(with);
         }
 
         public void AddRange(ICollection<T> entities)
@@ -53,12 +47,12 @@ namespace GiftTrackerClasses
             return dbSet.Local;
         }
 
-        public T GetById<U>(U id)
+        public T GetById(int id)
         {
             return dbSet.Find(id);
         }
 
-        private void Save()
+        public void Save()
         {
             context.SaveChanges();
         }
