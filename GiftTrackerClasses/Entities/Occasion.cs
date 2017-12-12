@@ -18,8 +18,8 @@ namespace GiftTrackerClasses
         public DateTime? Date { get; set; }
         [Required]
         public byte[] Image { get; set; }
-        public ICollection<Person> People { get; set; }
-        public ICollection<Gift> Gifts { get; set; }
+        public virtual ICollection<Person> People { get; set; }
+        public virtual ICollection<Gift> Gifts { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

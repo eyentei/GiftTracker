@@ -10,16 +10,16 @@ namespace GiftTrackerClasses
 {
     public class Person : INotifyPropertyChanged
     {
-        //[Required]
+        [Required]
         public int Id { get; set; }
-        //[Required]
+        [Required]
         public string Name { get; set; }
-        //[Required]
+        [Required]
         public DateTime? Birthday { get; set; }
-        //[Required]
+        [Required]
         public byte[] Image { get; set; }
-        public ICollection<Occasion> Occasions { get; set; }
-        public ICollection<Gift> Gifts { get; set; }
+        public virtual ICollection<Occasion> Occasions { get; set; }
+        public virtual ICollection<Gift> Gifts { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

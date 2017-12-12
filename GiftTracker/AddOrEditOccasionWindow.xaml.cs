@@ -33,7 +33,7 @@ namespace GiftTracker
         {
             InitializeComponent();
             OccasionRepository = new GTRepository<Occasion>(context);
-            userImageItems.ItemsSource = Directory.EnumerateFiles(@"..\..\Images", "*.ico");
+            userImageItems.ItemsSource = Directory.EnumerateFiles(@"..\..\Images\DefaultOccasionImages", "*.png");
 
             if (occasion == null)
             {
