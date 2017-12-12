@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace GiftTrackerClasses
 {
-    public class Person: INotifyPropertyChanged
+    public class Person : INotifyPropertyChanged
     {
-        [Required]
+        //[Required]
         public int Id { get; set; }
-        [Required]
+        //[Required]
         public string Name { get; set; }
-        [Required]
+        //[Required]
         public DateTime? Birthday { get; set; }
-        [Required]
+        //[Required]
         public byte[] Image { get; set; }
         public ICollection<Occasion> Occasions { get; set; }
         public ICollection<Gift> Gifts { get; set; }
