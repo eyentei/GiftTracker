@@ -38,6 +38,8 @@ namespace GiftTracker
             else if (item is Occasion occasion)
             {
                 CurrentOccasion = occasion;
+                deleteButton.Content = "Delete occasion";
+                editButton.Content = "Edit occasion";
             }
             Load();
 
@@ -75,8 +77,24 @@ namespace GiftTracker
         }
         private void DeleteButtonClicked(object sender, RoutedEventArgs e)
         {
-            PeopleRepository.Delete(CurrentPerson);
-            this.Close();
+            if (CurrentPerson != null)
+            {
+
+                foreach (var occasion in CurrentPerson.Occasions.ToList())
+                {
+                    if (occasion.IsPersonal)
+                    {
+                        OccasionsRepository.Delete(occasion);
+                    }
+                }
+                PeopleRepository.Delete(CurrentPerson);
+            }
+            else if (CurrentOccasion != null)
+            {
+                // примерно то же, но  для события
+            }
+            
+               this.Close();
         }
     }
 }

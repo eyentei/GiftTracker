@@ -43,10 +43,10 @@
                 </Ellipse.Fill>
             </Ellipse>
             <Label x:Name="itemName" Content="{Binding Name}" HorizontalAlignment="Left" Margin="145,40,0,0" VerticalAlignment="Top" Width="148" Height="70"/>
-            <Button Content="Edit Person" Margin="298,40,10,80" Click="EditButtonClicked"/>
-            <Button Content="Delete Person" Margin="298,80,10,40" Click="DeleteButtonClicked"/>
+            <Button x:Name="editButton"  Content="Edit Person" Margin="298,40,10,80" Click="EditButtonClicked"/>
+            <Button x:Name="deleteButton" Content="Delete Person" Margin="298,80,10,40" Click="DeleteButtonClicked"/>
         </Grid>
-        <DataGrid x:Name="detailsDataGrid" Margin="10,10,10,25" Grid.Row="1" Style="{StaticResource ReadOnlyDataGridStyle}">
+        <DataGrid x:Name="detailsDataGrid" Margin="10,10,10,64" Grid.Row="1" Style="{StaticResource ReadOnlyDataGridStyle}">
             <DataGrid.GroupStyle>
                 <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyle}"/>
             </DataGrid.GroupStyle>

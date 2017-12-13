@@ -16,16 +16,12 @@ namespace GiftTrackerClasses
             var occasionRepository = new GTRepository<Occasion>(context);
             var generator = new DataGenerator(context);
 
-            // var initialPeople = JsonConvert.DeserializeObject<List<Product>>(File.ReadAllText(@"../../Resources/initialPeople.json"));
-            // var initialOccasions = JsonConvert.DeserializeObject<List<VendingMachine>>(File.ReadAllText(@"../../Resources/initialOccasions.json"));
-
-            // тут читаем изначальные данные из json'a и генерируем на их основе нужные объекты, но пока так
-            
             var newYear = new Occasion
             {
                 Name = "New Year",
                 Date = new DateTime(9999, 01, 01),
-                Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\DefaultOccasionImages\christmas.png")
+                Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\DefaultOccasionImages\christmas.png"),
+                IsPersonal = false
 
             };
 
@@ -54,13 +50,13 @@ namespace GiftTrackerClasses
                 person.Occasions.Add(new Occasion {
                     Date = person.Birthday,
                     Name = person.Name + "'s Birthday",
-                    Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\DefaultOccasionImages\gift.png")
+                    Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\DefaultOccasionImages\gift.png"),
+                    IsPersonal = true
                 });
             }
             
             peopleRepository.AddRange(ppl);
-            occasionRepository.Add(newYear);
-            context.SaveChanges();
+            peopleRepository.Save();
         }
     }
 }
