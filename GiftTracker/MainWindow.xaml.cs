@@ -43,12 +43,8 @@ namespace GiftTracker
             peopleDataGrid.ItemsSource = people;
             occasionsDataGrid.DataContext = occasions;
             occasionsDataGrid.ItemsSource = occasions;
-            giftsDataGrid.DataContext = gifts;
-            giftsDataGrid.ItemsSource = gifts;
             peopleDataGrid.MouseLeftButtonUp += DataGrid_MouseLeftButtonUp<Person>;
             occasionsDataGrid.MouseLeftButtonUp += DataGrid_MouseLeftButtonUp<Occasion>;
-            giftsDataGrid.MouseLeftButtonUp += DataGrid_MouseLeftButtonUp<Gift>;
-
             context.SaveChanges();
         }
 

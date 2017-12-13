@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GiftTracker"
         mc:Ignorable="d"
-        Title="MainWindow" Height="470" Width="350"
+        Title="Main Window" Height="500" Width="350"
         Closing="OnClose" StateChanged="OnStateChanged" IsVisibleChanged="OnIsVisibleChanged"
         Icon="Images\gift.ico">
 
@@ -20,14 +20,14 @@
     </Window.Resources>
 
     <Grid>
-        <UniformGrid Columns="3" Margin="5,0">
+        <UniformGrid Columns="4" Margin="5,0">
             <Canvas x:Name="c1"/>
         </UniformGrid>
         <TabControl x:Name="giftsTabControl" Margin="0,0,0,0">
             <TabItem x:Name="peopleTabItem" Header="People" Width="{Binding ElementName=c1, Path=ActualWidth}">
                 <Grid x:Name="peopleGrid" Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="310"/>
+                        <RowDefinition Height="360"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <DataGrid x:Name="peopleDataGrid" ItemsSource="{Binding}" Style="{StaticResource ReadOnlyDataGridStyle}" Margin="10" Grid.Row="0" >
@@ -42,8 +42,8 @@
             <TabItem x:Name="occasionsTabItem" Header="Occasions" Width="{Binding ElementName=c1, Path=ActualWidth}">
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="310"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="360"/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     <DataGrid x:Name="occasionsDataGrid" ItemsSource="{Binding}" Style="{StaticResource ReadOnlyDataGridStyle}" Grid.Row="0" >
                         <DataGrid.Columns>
@@ -54,11 +54,11 @@
                     <Button x:Name="addOccasionButton" Content="Add a new occasion" Margin="10" Grid.Row="1" Click="AddButton_Click" Tag="Occasion"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="giftsTabItem" Header="Gifts" Width="{Binding ElementName=c1, Path=ActualWidth}">
+            <TabItem x:Name="giftsTabItem" Header="Unassigned&#xA;Gifts" Width="{Binding ElementName=c1, Path=ActualWidth}">
                 <Grid x:Name="giftsGrid" Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="310"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="360"/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     <DataGrid x:Name="giftsDataGrid" ItemsSource="{Binding}" Style="{StaticResource ReadOnlyDataGridStyle}" Margin="10" Grid.Row="0" >
                         <DataGrid.Columns>

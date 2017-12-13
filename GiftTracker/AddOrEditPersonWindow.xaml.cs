@@ -25,11 +25,13 @@ namespace GiftTracker
         Person CurrentPerson { get; set; }
         Person TemporaryPerson { get; set; }
         GTRepository<Person> PeopleRepository { get; set; }
+        GTRepository<Occasion> OccasionsRepository { get; set; }
         bool IsEdited { get; set; }
         public AddOrEditPersonWindow(GTContext context, Person person = null)
         {
             InitializeComponent();
             PeopleRepository = new GTRepository<Person>(context);
+            OccasionsRepository = new GTRepository<Occasion>(context);
             userImageItems.ItemsSource = Directory.EnumerateFiles(@"..\..\Images\DefaultUserImages", "*.png");
 
             if (person == null)
@@ -87,6 +89,14 @@ namespace GiftTracker
                 }
                 else
                 {
+                    var defaultOccasions = new List<Occasion>() {
+                        OccasionsRepository.GetAll().Where(x => x.Name == "New Year").ToList()[0],
+                        new Occasion {
+                            Date = TemporaryPerson.Birthday,
+                            Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\DefaultOccasionImages\gift.png"),
+                            Name = TemporaryPerson.Name + "'s Birthday"
+                        } };
+                    TemporaryPerson.Occasions = defaultOccasions;
                     PeopleRepository.Add(TemporaryPerson);
                 }
                 this.Close();

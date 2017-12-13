@@ -25,7 +25,7 @@
                     </Ellipse.Fill>
                 </Ellipse>
 
-                <ListView x:Name="userImageItems" Margin="20,35,20,0" Grid.Column="1" Background="Transparent" BorderThickness="0" SelectionChanged="UserImageItems_SelectionChanged" Height="80" VerticalAlignment="Top" SelectionMode="Single">
+                <ListView x:Name="userImageItems" Margin="20,40,20,80" Grid.Column="1" SelectionChanged="UserImageItems_SelectionChanged" Height="80">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Ellipse Width="50" Height="50">
@@ -42,14 +42,14 @@
                     </ListView.ItemsPanel>
                 </ListView>
 
-                <Label Content="Select a profile picture" HorizontalContentAlignment="Center" Margin="20,0" Grid.Column="1" Height="30" VerticalAlignment="Top"/>
-                <Label Content="Or choose your own" HorizontalContentAlignment="Center" Margin="20,120,20,0" Grid.Column="1" Height="30" VerticalAlignment="Top"/>
-                <Button Margin="20,155,20,0" Content="Browse" Grid.Column="1" Click="BrowseButton_Click" Height="35" VerticalAlignment="Top"/>
+                <Label Content="Select a profile picture" HorizontalContentAlignment="Center" Margin="20,5,20,165" Grid.Column="1"/>
+                <Label Content="Or choose your own" HorizontalContentAlignment="Center" Margin="20,120,20,50" Grid.Column="1"/>
+                <Button Margin="20,155,20,10" Content="Browse" Grid.Column="1" Click="BrowseButton_Click"/>
 
             </Grid>
         </Grid>
-        <Label Content="Name" Margin="150,51,150,0" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40" VerticalAlignment="Top"/>
-        <TextBox x:Name="nameTextBox" Margin="100,95,100,0" Grid.Row="1" TextWrapping="Wrap" Height="40" VerticalAlignment="Top" LostFocus="OnLostFocus">
+        <Label Content="Name" Margin="150,28,150,251" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="nameTextBox" Margin="100,73,100,206" Grid.Row="1" TextWrapping="Wrap" LostFocus="OnLostFocus">
             <TextBox.Text>
                 <Binding Path="Name" UpdateSourceTrigger="LostFocus">
                     <Binding.ValidationRules>
@@ -58,8 +58,8 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Label Content="Birthday" Margin="150,140,150,0" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40" VerticalAlignment="Top"/>
-        <DatePicker x:Name="birthdayDatePicker" Margin="100,185,100,0" Grid.Row="1" Height="40" VerticalAlignment="Top" LostFocus="OnLostFocus">
+        <Label Content="Birthday" Margin="150,129,150,150" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <DatePicker x:Name="birthdayDatePicker" Margin="100,174,100,105" Grid.Row="1" LostFocus="OnLostFocus">
             <DatePicker.SelectedDate>
                 <Binding Path ="Birthday" UpdateSourceTrigger="LostFocus">
                     <Binding.ValidationRules>
@@ -68,6 +68,6 @@
                 </Binding>
             </DatePicker.SelectedDate>
         </DatePicker>
-        <Button x:Name="saveButton" Content="Save" Margin="150,249,150,0" Grid.Row="1" Click="SaveButton_Click" Height="40" VerticalAlignment="Top"/>
+        <Button x:Name="saveButton" Content="Save" Margin="150,254,150,30" Grid.Row="1" Click="SaveButton_Click"/>
     </Grid>
 </Window>

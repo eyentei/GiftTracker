@@ -20,13 +20,23 @@ namespace GiftTrackerClasses
             // var initialOccasions = JsonConvert.DeserializeObject<List<VendingMachine>>(File.ReadAllText(@"../../Resources/initialOccasions.json"));
 
             // тут читаем изначальные данные из json'a и генерируем на их основе нужные объекты, но пока так
+            
+            var newYear = new Occasion
+            {
+                Name = "New Year",
+                Date = new DateTime(9999, 01, 01),
+                Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\DefaultOccasionImages\christmas.png")
+
+            };
+
             var ppl = new List<Person>() {
                 new Person
             {
                 Name = "Vasya",
                 Birthday = new DateTime(1995, 11, 04),
                 Gifts = new List<Gift>(),
-                Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\DefaultUserImages\cat_icon.png")
+                Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\DefaultUserImages\cat_icon.png"),
+                Occasions = new List<Occasion>()
 
             },
             new Person
@@ -34,33 +44,22 @@ namespace GiftTrackerClasses
                 Name = "Petya",
                 Birthday = new DateTime(1996, 04, 14),
                 Gifts = new List<Gift>(),
-                Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\DefaultUserImages\male_icon.png")
-            },
-            new Person
-            {
-                Name = "Masha",
-                Birthday = new DateTime(1994, 04, 12),
-                Gifts = new List<Gift>(),
-                Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\DefaultUserImages\female_icon.png")
+                Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\DefaultUserImages\male_icon.png"),
+                Occasions = new List<Occasion>()
             }};
 
-            var occs = new List<Occasion>() {
-                new Occasion
+            foreach (var person in ppl)
             {
-                Name = "New Year",
-                Date = new DateTime(2018, 01, 01),
-                Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\DefaultOccasionImages\christmas.png")
-
-            },
-                new Occasion
-            {
-                Name = "Birthday",
-                Date = new DateTime(2018, 01, 15),
-                Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\gift.ico")
-            } };
+                person.Occasions.Add(newYear);
+                person.Occasions.Add(new Occasion {
+                    Date = person.Birthday,
+                    Name = person.Name + "'s Birthday",
+                    Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\DefaultOccasionImages\gift.png")
+                });
+            }
             
             peopleRepository.AddRange(ppl);
-            occasionRepository.AddRange(occs);
+            occasionRepository.Add(newYear);
             context.SaveChanges();
         }
     }

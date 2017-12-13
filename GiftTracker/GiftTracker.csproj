@@ -127,7 +127,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -156,6 +158,31 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\DefaultUserImages\male_icon.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\DefaultGiftImages\book.png" />
+    <Resource Include="Images\DefaultGiftImages\camera.png" />
+    <Resource Include="Images\DefaultGiftImages\car.png" />
+    <Resource Include="Images\DefaultGiftImages\card.png" />
+    <Resource Include="Images\DefaultGiftImages\flowers.png" />
+    <Resource Include="Images\DefaultGiftImages\food.png" />
+    <Resource Include="Images\DefaultGiftImages\gift.png" />
+    <Resource Include="Images\DefaultGiftImages\globe.png" />
+    <Resource Include="Images\DefaultGiftImages\laptop.png" />
+    <Resource Include="Images\DefaultGiftImages\money.png" />
+    <Resource Include="Images\DefaultGiftImages\music.png" />
+    <Resource Include="Images\DefaultGiftImages\phone.png" />
+    <Resource Include="Images\DefaultGiftImages\shopping_bag.png" />
+    <Resource Include="Images\DefaultGiftImages\star.png" />
+    <Resource Include="Images\DefaultGiftImages\wallet.png" />
+    <Resource Include="Images\DefaultGiftImages\wine_bottle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\DefaultOccasionImages\christmas.png" />
+    <Resource Include="Images\DefaultOccasionImages\gift.png" />
+    <Resource Include="Images\DefaultOccasionImages\heart.png" />
+    <Resource Include="Images\DefaultOccasionImages\wedding.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.2.2.1.0\build\net452\Fody.targets" Condition="Exists('..\packages\Fody.2.2.1.0\build\net452\Fody.targets')" />

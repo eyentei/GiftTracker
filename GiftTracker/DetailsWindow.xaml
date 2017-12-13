@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GiftTracker"
         mc:Ignorable="d"
-        Width="300" Height="400">
+        Width="400" Height="450">
 
     <Window.Resources>
         <Style x:Key="GroupHeaderStyle" TargetType="{x:Type GroupItem}">
@@ -33,25 +33,25 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="300"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <Ellipse x:Name="itemImage" Grid.Column="0"  Margin="10,10,0,0" HorizontalAlignment="Left" Width="80" Height="80">
+            <Ellipse x:Name="itemImage" Grid.Column="0"  Margin="10,10,0,10" HorizontalAlignment="Left" Width="130">
                 <Ellipse.Fill>
                     <ImageBrush ImageSource="{Binding Image}"/>
                 </Ellipse.Fill>
             </Ellipse>
-            <Label x:Name="itemName" Content="{Binding Name}" HorizontalAlignment="Left" Margin="115,60,0,0" VerticalAlignment="Top" Width="148" Height="30"/>
-            <Button Content="Edit Person" Margin="188,10,10,70" Click="EditButtonClicked"/>
-            <Button Content="Delete Person" Margin="188,45,10,35" Click="DeleteButtonClicked"/>
+            <Label x:Name="itemName" Content="{Binding Name}" HorizontalAlignment="Left" Margin="145,40,0,0" VerticalAlignment="Top" Width="148" Height="70"/>
+            <Button Content="Edit Person" Margin="298,40,10,80" Click="EditButtonClicked"/>
+            <Button Content="Delete Person" Margin="298,80,10,40" Click="DeleteButtonClicked"/>
         </Grid>
-        <DataGrid x:Name="detailsDataGrid" Margin="10,10,10,40" Grid.Row="1" Style="{StaticResource ReadOnlyDataGridStyle}">
+        <DataGrid x:Name="detailsDataGrid" Margin="10,10,10,25" Grid.Row="1" Style="{StaticResource ReadOnlyDataGridStyle}">
             <DataGrid.GroupStyle>
                 <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyle}"/>
             </DataGrid.GroupStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Width="*" Binding="{Binding Name}"/>
+                <DataGridTextColumn Width="*" Binding="{Binding Gifts.Name}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

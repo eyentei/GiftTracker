@@ -33,14 +33,14 @@ namespace GiftTracker
         {
             InitializeComponent();
             GiftRepository = new GTRepository<Gift>(context);
-            userImageItems.ItemsSource = Directory.EnumerateFiles(@"..\..\Images\DefaultGiftImages", "*.png");
+            giftImageItems.ItemsSource = Directory.EnumerateFiles(@"..\..\Images\DefaultGiftImages", "*.png");
 
             if (gift == null)
             {
                 IsEdited = false;
                 TemporaryGift = new Gift();
-                userImageItems.SelectedIndex = 0;
-                userImageItems.Focus();
+                giftImageItems.SelectedIndex = 0;
+                giftImageItems.Focus();
             }
             else
             {
@@ -56,17 +56,17 @@ namespace GiftTracker
             var dialog = OpenFileDialogHelper.OpenImageFileDialog();
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                userImageItems.UnselectAll();
+                giftImageItems.UnselectAll();
                 string fileName = dialog.FileName;
                 TemporaryGift.Image = ImageHelper.BitmapSourceToByteArray(fileName);
             }
         }
 
-        private void UserImageItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void GiftImageItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (userImageItems.SelectedItems.Count != 0)
+            if (giftImageItems.SelectedItems.Count != 0)
             {
-                TemporaryGift.Image = ImageHelper.BitmapSourceToByteArray(userImageItems.SelectedItem.ToString());
+                TemporaryGift.Image = ImageHelper.BitmapSourceToByteArray(giftImageItems.SelectedItem.ToString());
             }
 
         }

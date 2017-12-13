@@ -6,25 +6,25 @@
         xmlns:validation="clr-namespace:GiftTrackerClasses;assembly=GiftTrackerClasses"
         xmlns:local="clr-namespace:GiftTracker"
         mc:Ignorable="d"
-        Title="AddOrEditGiftWindow" Height="550" Width="450">
+        Title="AddOrEditGiftWindow" Height="625.751" Width="450">
     <Grid Background="LavenderBlush">
         <Grid.RowDefinitions>
-            <RowDefinition Height="200"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="300"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="111*"/>
-                    <ColumnDefinition Width="181*"/>
+                    <ColumnDefinition Width="89*"/>
+                    <ColumnDefinition Width="132*"/>
                 </Grid.ColumnDefinitions>
-                <Ellipse x:Name="userImage" Grid.Column="0" Margin="20,20,0,0" Width="145" HorizontalAlignment="Left" Stretch="UniformToFill" Height="145" VerticalAlignment="Top">
+                <Ellipse x:Name="userImage" Grid.Column="0" Margin="20,20,0,0" Stretch="UniformToFill" HorizontalAlignment="Left" Width="145" Height="145" VerticalAlignment="Top">
                     <Ellipse.Fill>
                         <ImageBrush ImageSource="{Binding Image}"/>
                     </Ellipse.Fill>
                 </Ellipse>
 
-                <ListView x:Name="userImageItems" Margin="20,35,20,0" Grid.Column="1" Background="Transparent" BorderThickness="0" SelectionChanged="UserImageItems_SelectionChanged" Height="80" VerticalAlignment="Top" SelectionMode="Single">
+                <ListView x:Name="giftImageItems" Margin="15,52,10,80" Grid.Column="1" SelectionChanged="GiftImageItems_SelectionChanged">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Ellipse Width="50" Height="50">
@@ -40,13 +40,13 @@
                         </ItemsPanelTemplate>
                     </ListView.ItemsPanel>
                 </ListView>
-                <Label Content="Select a picture for the gift" HorizontalContentAlignment="Center" Margin="20,0" Grid.Column="1" Height="30" VerticalAlignment="Top"/>
-                <Label Content="Or choose your own" HorizontalContentAlignment="Center" Margin="20,120,20,0" Grid.Column="1" Height="30" VerticalAlignment="Top"/>
-                <Button Margin="20,155,20,0" Content="Browse" Grid.Column="1" Click="BrowseButton_Click" Height="35" VerticalAlignment="Top"/>
+                <Label Content="Select a picture for the gift" HorizontalContentAlignment="Center" Margin="15,10,10,0" Grid.Column="1" Height="30" VerticalAlignment="Top"/>
+                <Label Content="Or choose your own" HorizontalContentAlignment="Center" Margin="15,225,10,46" Grid.Column="1"/>
+                <Button Margin="15,259,10,10" Content="Browse" Grid.Column="1" Click="BrowseButton_Click"/>
             </Grid>
         </Grid>
-        <Label Content="Name of the gift" Margin="150,51,150,0" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40" VerticalAlignment="Top"/>
-        <TextBox x:Name="nameTextBox" Margin="100,95,100,0" Grid.Row="1" TextWrapping="Wrap" Height="40" VerticalAlignment="Top" LostFocus="OnLostFocus">
+        <Label Content="Name of the gift" Margin="150,18,150,242" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1"/>
+        <TextBox x:Name="nameTextBox" Margin="100,58,100,202" Grid.Row="1" TextWrapping="Wrap" LostFocus="OnLostFocus">
             <TextBox.Text>
                 <Binding Path="Name" UpdateSourceTrigger="LostFocus">
                     <Binding.ValidationRules>
@@ -55,6 +55,8 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Button x:Name="saveButton" Content="Save" Margin="150,249,150,0" Grid.Row="1" Click="SaveButton_Click" Height="40" VerticalAlignment="Top"/>
+        <Button x:Name="saveButton" Content="Save" Margin="150,0,150,17" Grid.Row="1" Click="SaveButton_Click" Height="35" VerticalAlignment="Bottom"/>
+        <TextBox Margin="100,137,100,67" Grid.Row="1" TextWrapping="Wrap"/>
+        <Label Content="Description" Margin="150,108,150,158" Grid.Row="1" HorizontalContentAlignment="Center"/>
     </Grid>
 </Window>

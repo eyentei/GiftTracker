@@ -44,33 +44,26 @@ namespace GiftTracker
         }
 
         private void Load()
-        {
-            List<Gift> gifts = new List<Gift>();
+        {        
             if (CurrentPerson != null)
             {
                 this.DataContext = CurrentPerson;
-                gifts = CurrentPerson.Gifts != null ? CurrentPerson.Gifts.ToList() : new List<Gift>();
-                ListCollectionView lcv = new ListCollectionView(gifts);
-                lcv.GroupDescriptions.Add(new PropertyGroupDescription("Occasion.Name"));
+                var co = CurrentPerson.Occasions.ToList();
+                ListCollectionView lcv = new ListCollectionView(co);
+                lcv.GroupDescriptions.Add(new PropertyGroupDescription("Name"));
                 detailsDataGrid.ItemsSource = lcv;
-                detailsDataGrid.UnselectAll();
-
             }
 
             else if (CurrentOccasion != null)
             {
                 this.DataContext = CurrentOccasion;
-                gifts = CurrentOccasion.Gifts != null ? CurrentOccasion.Gifts.ToList() : new List<Gift>();
-                ListCollectionView lcv = new ListCollectionView(gifts);
-                lcv.GroupDescriptions.Add(new PropertyGroupDescription("Person.Name"));
+                var cp = CurrentOccasion.People.ToList();
+                ListCollectionView lcv = new ListCollectionView(cp);
+                lcv.GroupDescriptions.Add(new PropertyGroupDescription("Name"));
                 detailsDataGrid.ItemsSource = lcv;
-                detailsDataGrid.UnselectAll();
             }
+            detailsDataGrid.UnselectAll();
 
-            if (gifts.Count == 0)
-            {
-                detailsDataGrid.Height = 50;
-            }
         }
         private void PlusButtonClicked(object sender, RoutedEventArgs e)
         {
