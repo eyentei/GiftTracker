@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing.Imaging;
 using System.IO;
@@ -28,12 +29,16 @@ namespace GiftTracker
         Occasion CurrentOccasion { get; set; }
         Occasion TemporaryOccasion { get; set; }
         GTRepository<Occasion> OccasionRepository { get; set; }
+        GTRepository<Person> PeopleRepository { get; set; }
         bool IsEdited { get; set; }
         public AddOrEditOccasionWindow(GTContext context, Occasion occasion = null)
         {
             InitializeComponent();
             OccasionRepository = new GTRepository<Occasion>(context);
+            PeopleRepository = new GTRepository<Person>(context);
+            var ppl = PeopleRepository.GetAll();
             userImageItems.ItemsSource = Directory.EnumerateFiles(@"..\..\Images\DefaultOccasionImages", "*.png");
+            personComboBox.ItemsSource = ppl;
 
             if (occasion == null)
             {
@@ -76,6 +81,7 @@ namespace GiftTracker
             nameTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             dateDatePicker.GetBindingExpression(DatePicker.SelectedDateProperty).UpdateSource();
 
+
             if (Validation.GetHasError(nameTextBox) || Validation.GetHasError(dateDatePicker))
             {
                 MessageBox.Show("Please provide correct data");
@@ -111,5 +117,6 @@ namespace GiftTracker
             }
 
         }
+
     }
 }
