@@ -19,9 +19,11 @@ namespace GiftTracker
     {
         Person CurrentPerson { get; set; }
         Occasion CurrentOccasion { get; set; }
+        Gift CurrentGift { get; set; }
         GTContext Context { get; set; }
         GTRepository<Person> PeopleRepository { get; set; }
         GTRepository<Occasion> OccasionsRepository { get; set; }
+        GTRepository<Gift> GiftsRepository { get; set; }
 
         public DetailsWindow(object item, GTContext context)
         {
@@ -30,6 +32,7 @@ namespace GiftTracker
             Context = context;
             PeopleRepository = new GTRepository<Person>(context);
             OccasionsRepository = new GTRepository<Occasion>(context);
+            GiftsRepository = new GTRepository<Gift>(context);
 
             if (item is Person person)
             {
@@ -40,13 +43,23 @@ namespace GiftTracker
                 CurrentOccasion = occasion;
                 deleteButton.Content = "Delete occasion";
                 editButton.Content = "Edit occasion";
+                deleteButton.Tag = "Occasion";
+                editButton.Tag = "Occasion";
+            }
+            else if (item is Gift gift)
+            {
+                CurrentGift = gift;
+                deleteButton.Content = "Delete gift";
+                editButton.Content = "Edit gift";
+                deleteButton.Tag = "Gift";
+                editButton.Tag = "Gift";
             }
             Load();
 
         }
 
         private void Load()
-        {        
+        {
             if (CurrentPerson != null)
             {
                 this.DataContext = CurrentPerson;
@@ -61,20 +74,26 @@ namespace GiftTracker
                 lcv.GroupDescriptions.Add(groupDescription);
                 detailsDataGrid.ItemsSource = lcv;
             }
-
             else if (CurrentOccasion != null)
             {
                 this.DataContext = CurrentOccasion;
                 var gifts = CurrentOccasion.Gifts;
                 var people = CurrentOccasion.People;
-                ListCollectionView lcv = new ListCollectionView(gifts);
+                if (gifts != null)
+                {
+                    ListCollectionView lcv = new ListCollectionView(gifts);
 
-                var groupDescription = new PropertyGroupDescription("Owner.Name");
-                foreach (var person in people)
-                    groupDescription.GroupNames.Add(person.Name);
+                    var groupDescription = new PropertyGroupDescription("Owner.Name");
+                    foreach (var person in people)
+                        groupDescription.GroupNames.Add(person.Name);
 
-                lcv.GroupDescriptions.Add(groupDescription);
-                detailsDataGrid.ItemsSource = lcv;
+                    lcv.GroupDescriptions.Add(groupDescription);
+                    detailsDataGrid.ItemsSource = lcv;
+                }
+            }
+            else if (CurrentGift != null)
+            {
+                this.DataContext = CurrentGift;
             }
             detailsDataGrid.UnselectAll();
 
@@ -97,7 +116,21 @@ namespace GiftTracker
         }
         private void EditButtonClicked(object sender, RoutedEventArgs e)
         {
-            new AddOrEditPersonWindow(Context, CurrentPerson).ShowDialog();
+            var tag = ((Button)sender).Tag.ToString();
+            switch (tag)
+            {
+                case "Person":
+                    new AddOrEditPersonWindow(Context, CurrentPerson).ShowDialog();
+                    break;
+                case "Occasion":
+                    new AddOrEditOccasionWindow(Context, CurrentOccasion).ShowDialog();
+                    break;
+                case "Gift":
+                    new AddOrEditGiftWindow(Context, CurrentGift).ShowDialog();
+                    break;
+                default:
+                    break;
+            }
         }
         private void DeleteButtonClicked(object sender, RoutedEventArgs e)
         {
@@ -115,10 +148,27 @@ namespace GiftTracker
             }
             else if (CurrentOccasion != null)
             {
-                // примерно то же, но  для события
+                foreach (var gift in CurrentOccasion.Gifts.ToList())
+                {
+                     GiftsRepository.Delete(gift);
+                }
+                OccasionsRepository.Delete(CurrentOccasion);
             }
-            
-               this.Close();
+            else if (CurrentGift != null)
+            {
+                GiftsRepository.Delete(CurrentGift);
+            }
+
+            this.Close();
+        }
+
+        private void detailsDataGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            CurrentGift = (Gift)detailsDataGrid.SelectedItem;
+            if (CurrentGift != null)
+            {
+                new AddOrEditGiftWindow(Context, CurrentGift).ShowDialog();
+            }
         }
     }
 }

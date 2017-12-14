@@ -45,7 +45,7 @@ namespace GiftTracker
             else
             {
                 CurrentPerson = person;
-                TemporaryPerson = new Person() { Image = person.Image, Name = person.Name, Birthday = person.Birthday};
+                TemporaryPerson = new Person() { Image = person.Image, Name = person.Name, Birthday = person.Birthday };
                 IsEdited = true;
             }
             this.DataContext = TemporaryPerson;
@@ -79,7 +79,8 @@ namespace GiftTracker
             if (Validation.GetHasError(nameTextBox) || Validation.GetHasError(birthdayDatePicker))
             {
                 MessageBox.Show("Please provide correct data");
-            } else
+            }
+            else
             {
                 if (IsEdited)
                 {
@@ -102,7 +103,7 @@ namespace GiftTracker
                     PeopleRepository.Add(TemporaryPerson);
                 }
                 this.Close();
-            }             
+            }
         }
 
         private void OnLostFocus(object sender, RoutedEventArgs e)
@@ -110,7 +111,7 @@ namespace GiftTracker
             if (sender is TextBox)
             {
                 TextBox text = sender as TextBox;
-                BindingOperations.GetBindingExpression(text, TextBox.TextProperty).UpdateSource();                
+                BindingOperations.GetBindingExpression(text, TextBox.TextProperty).UpdateSource();
             }
             if (sender is DatePicker)
             {

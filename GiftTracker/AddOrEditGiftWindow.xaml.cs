@@ -32,11 +32,12 @@ namespace GiftTracker
         GTRepository<Gift> GiftRepository { get; set; }
         bool IsEdited { get; set; }
 
-        public AddOrEditGiftWindow(GTContext context, Gift gift = null) {
-
+        public AddOrEditGiftWindow(GTContext context, Gift gift = null)
+        {
             Initialize(context);
             if (gift == null)
             {
+                TemporaryGift = new Gift();
                 NewGift();
             }
             else
@@ -47,8 +48,8 @@ namespace GiftTracker
             }
             this.DataContext = TemporaryGift;
         }
-        public AddOrEditGiftWindow(GTContext context, Occasion occasion, Person person) {
-
+        public AddOrEditGiftWindow(GTContext context, Occasion occasion, Person person)
+        {
             Initialize(context);
             CurrentPerson = person;
             CurrentOccasion = occasion;

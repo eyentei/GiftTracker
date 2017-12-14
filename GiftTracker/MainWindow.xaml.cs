@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -43,8 +44,12 @@ namespace GiftTracker
             peopleDataGrid.ItemsSource = people;
             occasionsDataGrid.DataContext = occasions;
             occasionsDataGrid.ItemsSource = occasions;
+            giftsDataGrid.DataContext = gifts.Where(g => g.Owner == null && g.Occasion == null);
+            giftsDataGrid.ItemsSource = gifts.Where(g => g.Owner == null && g.Occasion == null);
+
             peopleDataGrid.MouseLeftButtonUp += DataGrid_MouseLeftButtonUp<Person>;
             occasionsDataGrid.MouseLeftButtonUp += DataGrid_MouseLeftButtonUp<Occasion>;
+            giftsDataGrid.MouseLeftButtonUp += DataGrid_MouseLeftButtonUp<Gift>;
             context.SaveChanges();
         }
 
