@@ -1,6 +1,7 @@
 ﻿using GiftTrackerClasses;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,10 +42,18 @@ namespace GiftTracker
             else if (item is Occasion occasion)
             {
                 CurrentOccasion = occasion;
-                deleteButton.Content = "Delete occasion";
-                editButton.Content = "Edit occasion";
-                deleteButton.Tag = "Occasion";
-                editButton.Tag = "Occasion";
+                if (CurrentOccasion.Name == "New Year")
+                {
+                    deleteButton.Visibility = Visibility.Hidden;
+                    editButton.Visibility = Visibility.Hidden;
+                } else
+                {
+                    deleteButton.Content = "Delete occasion";
+                    editButton.Content = "Edit occasion";
+                    deleteButton.Tag = "Occasion";
+                    editButton.Tag = "Occasion";
+                }
+                
             }
             else if (item is Gift gift)
             {
@@ -63,8 +72,9 @@ namespace GiftTracker
             if (CurrentPerson != null)
             {
                 this.DataContext = CurrentPerson;
-                var gifts = CurrentPerson.Gifts;
+                var gifts = CurrentPerson.Gifts ?? new ObservableCollection<Gift>();
                 var occasions = CurrentPerson.Occasions;
+
                 ListCollectionView lcv = new ListCollectionView(gifts);
 
                 var groupDescription = new PropertyGroupDescription("Occasion.Name");
@@ -77,19 +87,18 @@ namespace GiftTracker
             else if (CurrentOccasion != null)
             {
                 this.DataContext = CurrentOccasion;
-                var gifts = CurrentOccasion.Gifts;
+                var gifts = CurrentOccasion.Gifts ?? new ObservableCollection<Gift>();
                 var people = CurrentOccasion.People;
-                if (gifts != null)
-                {
-                    ListCollectionView lcv = new ListCollectionView(gifts);
 
-                    var groupDescription = new PropertyGroupDescription("Owner.Name");
-                    foreach (var person in people)
-                        groupDescription.GroupNames.Add(person.Name);
+                ListCollectionView lcv = new ListCollectionView(gifts);
 
-                    lcv.GroupDescriptions.Add(groupDescription);
-                    detailsDataGrid.ItemsSource = lcv;
-                }
+                var groupDescription = new PropertyGroupDescription("Owner.Name");
+                foreach (var person in people)
+                    groupDescription.GroupNames.Add(person.Name);
+
+                lcv.GroupDescriptions.Add(groupDescription);
+                detailsDataGrid.ItemsSource = lcv;
+
             }
             else if (CurrentGift != null)
             {
@@ -136,22 +145,13 @@ namespace GiftTracker
         {
             if (CurrentPerson != null)
             {
-
-                foreach (var occasion in CurrentPerson.Occasions.ToList())
-                {
-                    if (occasion.IsPersonal)
-                    {
-                        OccasionsRepository.Delete(occasion);
-                    }
-                }
+                OccasionsRepository.DeleteRange(CurrentPerson.Occasions.Where(x => x.IsPersonal));
+                GiftsRepository.DeleteRange(CurrentPerson.Gifts);
                 PeopleRepository.Delete(CurrentPerson);
             }
             else if (CurrentOccasion != null)
             {
-                foreach (var gift in CurrentOccasion.Gifts.ToList())
-                {
-                     GiftsRepository.Delete(gift);
-                }
+                GiftsRepository.DeleteRange(CurrentOccasion.Gifts);
                 OccasionsRepository.Delete(CurrentOccasion);
             }
             else if (CurrentGift != null)
@@ -162,7 +162,7 @@ namespace GiftTracker
             this.Close();
         }
 
-        private void detailsDataGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void DetailsDataGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             CurrentGift = (Gift)detailsDataGrid.SelectedItem;
             if (CurrentGift != null)

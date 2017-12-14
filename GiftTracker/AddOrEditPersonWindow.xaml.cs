@@ -92,7 +92,7 @@ namespace GiftTracker
                 else
                 {
                     var defaultOccasions = new ObservableCollection<Occasion>() {
-                        OccasionsRepository.GetAll().Where(x => x.Name == "New Year").ToList()[0],
+                        OccasionsRepository.GetAll().SingleOrDefault(x => x.Name == "New Year"),
                         new Occasion {
                             Date = TemporaryPerson.Birthday,
                             Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\DefaultOccasionImages\gift.png"),

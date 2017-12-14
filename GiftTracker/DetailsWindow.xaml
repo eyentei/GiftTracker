@@ -46,7 +46,7 @@
             <Button x:Name="editButton"  Content="Edit Person" Margin="298,40,10,80" Click="EditButtonClicked" Tag="Person"/>
             <Button x:Name="deleteButton" Content="Delete Person" Margin="298,80,10,40" Click="DeleteButtonClicked" Tag="Person"/>
         </Grid>
-        <DataGrid x:Name="detailsDataGrid" Margin="10,10,10,64" Grid.Row="1" Style="{StaticResource ReadOnlyDataGridStyle}" MouseLeftButtonUp="detailsDataGrid_MouseLeftButtonUp">
+        <DataGrid x:Name="detailsDataGrid" Margin="10,10,10,64" Grid.Row="1" Style="{StaticResource ReadOnlyDataGridStyle}" MouseLeftButtonUp="DetailsDataGrid_MouseLeftButtonUp">
             <DataGrid.GroupStyle>
                 <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyle}"/>
             </DataGrid.GroupStyle>

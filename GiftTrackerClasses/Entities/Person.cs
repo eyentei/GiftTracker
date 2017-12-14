@@ -19,8 +19,8 @@ namespace GiftTrackerClasses
         public DateTime? Birthday { get; set; }
         [Required]
         public byte[] Image { get; set; }
-        public virtual ObservableCollection<Occasion> Occasions { get; set; }
-        public virtual ObservableCollection<Gift> Gifts { get; set; }
+        public virtual ObservableCollection<Occasion> Occasions { get; set; } = new ObservableCollection<Occasion>();
+        public virtual ObservableCollection<Gift> Gifts { get; set; } = new ObservableCollection<Gift>();
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

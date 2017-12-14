@@ -30,16 +30,28 @@ namespace GiftTrackerClasses
             context.Entry(updatedItem).CurrentValues.SetValues(with);
         }
 
-        public void AddRange(ICollection<T> entities)
+        public void AddRange(IEnumerable<T> entities)
         {
-            dbSet.AddRange(entities);
-            Save();
+            if (entities != null)
+            {
+                dbSet.AddRange(entities);
+                Save();
+            }           
         }
 
         public void Delete(T entity)
         {
             dbSet.Remove(entity);
             Save();
+        }
+
+        public void DeleteRange(IEnumerable<T> entities)
+        {
+            if (entities != null)
+            {
+                dbSet.RemoveRange(entities);
+                Save();
+            }
         }
 
         public ObservableCollection<T> GetAll()

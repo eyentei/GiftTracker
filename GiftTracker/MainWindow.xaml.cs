@@ -32,20 +32,23 @@ namespace GiftTracker
             InitializeComponent();
             SetNotifyIcon();
             context = new GTContext();
-            var peopleRepo = new GTRepository<Person>(context);
-            var occasionsRepo = new GTRepository<Occasion>(context);
-            var giftsRepo = new GTRepository<Gift>(context);
 
-            var people = peopleRepo.GetAll();
-            var occasions = occasionsRepo.GetAll();
-            var gifts = giftsRepo.GetAll();
+            var people = new GTRepository<Person>(context).GetAll();
+            var occasions = new GTRepository<Occasion>(context).GetAll();
+            var gifts = new GTRepository<Gift>(context).GetAll();
 
-            peopleDataGrid.DataContext = people;
             peopleDataGrid.ItemsSource = people;
-            occasionsDataGrid.DataContext = occasions;
             occasionsDataGrid.ItemsSource = occasions;
-            giftsDataGrid.DataContext = gifts.Where(g => g.Owner == null && g.Occasion == null);
-            giftsDataGrid.ItemsSource = gifts.Where(g => g.Owner == null && g.Occasion == null);
+
+            //a way to filter an observable collection
+            ICollectionView giftsView = CollectionViewSource.GetDefaultView(gifts);
+            giftsView.Filter = (o) =>
+            {
+                Gift gift = (Gift)o;
+                return gift.Owner == null && gift.Occasion == null;
+            };
+
+            giftsDataGrid.ItemsSource = giftsView;
 
             peopleDataGrid.MouseLeftButtonUp += DataGrid_MouseLeftButtonUp<Person>;
             occasionsDataGrid.MouseLeftButtonUp += DataGrid_MouseLeftButtonUp<Occasion>;

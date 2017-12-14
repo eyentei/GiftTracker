@@ -22,7 +22,7 @@ namespace GiftTrackerClasses
         public DateTime? Date { get; set; }
         [Required]
         public byte[] Image { get; set; }
-        public virtual ObservableCollection<Person> People { get; set; }
-        public virtual ObservableCollection<Gift> Gifts { get; set; }
+        public virtual ObservableCollection<Person> People { get; set; } = new ObservableCollection<Person>();
+        public virtual ObservableCollection<Gift> Gifts { get; set; } = new ObservableCollection<Gift>();
     }
 }
