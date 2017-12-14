@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -30,18 +31,18 @@ namespace GiftTrackerClasses
             {
                 Name = "Vasya",
                 Birthday = new DateTime(1995, 11, 04),
-                Gifts = new List<Gift>(),
+                Gifts = new ObservableCollection<Gift>(),
                 Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\DefaultUserImages\cat_icon.png"),
-                Occasions = new List<Occasion>()
+                Occasions = new ObservableCollection<Occasion>()
 
             },
             new Person
             {
                 Name = "Petya",
                 Birthday = new DateTime(1996, 04, 14),
-                Gifts = new List<Gift>(),
+                Gifts = new ObservableCollection<Gift>(),
                 Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\DefaultUserImages\male_icon.png"),
-                Occasions = new List<Occasion>()
+                Occasions = new ObservableCollection<Occasion>()
             }};
 
             foreach (var person in ppl)

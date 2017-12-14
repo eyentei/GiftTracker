@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using PropertyChanged;
+using System.Collections.ObjectModel;
 
 namespace GiftTracker
 {
@@ -89,7 +90,7 @@ namespace GiftTracker
                 }
                 else
                 {
-                    var defaultOccasions = new List<Occasion>() {
+                    var defaultOccasions = new ObservableCollection<Occasion>() {
                         OccasionsRepository.GetAll().Where(x => x.Name == "New Year").ToList()[0],
                         new Occasion {
                             Date = TemporaryPerson.Birthday,

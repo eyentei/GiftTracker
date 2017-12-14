@@ -51,7 +51,7 @@
                 <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyle}"/>
             </DataGrid.GroupStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Width="*" Binding="{Binding Gifts.Name}"/>
+                <DataGridTextColumn Width="*" Binding="{Binding Name}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

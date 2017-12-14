@@ -26,31 +26,50 @@ namespace GiftTracker
     public partial class AddOrEditGiftWindow : Window
     {
         Gift CurrentGift { get; set; }
+        Person CurrentPerson { get; set; }
+        Occasion CurrentOccasion { get; set; }
         Gift TemporaryGift { get; set; }
         GTRepository<Gift> GiftRepository { get; set; }
         bool IsEdited { get; set; }
-        public AddOrEditGiftWindow(GTContext context, Gift gift = null)
-        {
-            InitializeComponent();
-            GiftRepository = new GTRepository<Gift>(context);
-            giftImageItems.ItemsSource = Directory.EnumerateFiles(@"..\..\Images\DefaultGiftImages", "*.png");
 
+        public AddOrEditGiftWindow(GTContext context, Gift gift = null) {
+
+            Initialize(context);
             if (gift == null)
             {
-                IsEdited = false;
-                TemporaryGift = new Gift();
-                giftImageItems.SelectedIndex = 0;
-                giftImageItems.Focus();
+                NewGift();
             }
             else
             {
                 CurrentGift = gift;
-                TemporaryGift = new Gift() { Image = gift.Image, Name = gift.Name };
+                TemporaryGift = new Gift() { Image = gift.Image, Name = gift.Name, IsGiven = gift.IsGiven, Description = gift.Description };
                 IsEdited = true;
             }
             this.DataContext = TemporaryGift;
         }
+        public AddOrEditGiftWindow(GTContext context, Occasion occasion, Person person) {
 
+            Initialize(context);
+            CurrentPerson = person;
+            CurrentOccasion = occasion;
+            TemporaryGift = new Gift();
+            NewGift();
+            this.DataContext = TemporaryGift;
+        }
+
+        private void Initialize(GTContext context)
+        {
+            InitializeComponent();
+            GiftRepository = new GTRepository<Gift>(context);
+            giftImageItems.ItemsSource = Directory.EnumerateFiles(@"..\..\Images\DefaultGiftImages", "*.png");
+        }
+
+        private void NewGift()
+        {
+            IsEdited = false;
+            giftImageItems.SelectedIndex = 0;
+            giftImageItems.Focus();
+        }
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = OpenFileDialogHelper.OpenImageFileDialog();
@@ -85,10 +104,14 @@ namespace GiftTracker
                 {
                     CurrentGift.Image = TemporaryGift.Image;
                     CurrentGift.Name = TemporaryGift.Name;
+                    CurrentGift.Description = TemporaryGift.Description;
+                    CurrentGift.IsGiven = TemporaryGift.IsGiven;
                     GiftRepository.Save();
                 }
                 else
                 {
+                    TemporaryGift.Owner = CurrentPerson;
+                    TemporaryGift.Occasion = CurrentOccasion;
                     GiftRepository.Add(TemporaryGift);
                 }
                 this.Close();

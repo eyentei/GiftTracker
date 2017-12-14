@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -41,7 +42,7 @@ namespace GiftTrackerClasses
             Save();
         }
 
-        public ICollection<T> GetAll()
+        public ObservableCollection<T> GetAll()
         {
             dbSet.Load();
             return dbSet.Local;
