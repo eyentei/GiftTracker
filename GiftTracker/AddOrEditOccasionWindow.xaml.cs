@@ -97,6 +97,18 @@ namespace GiftTracker
                 }
                 else
                 {
+                    if (onePersonCheckBox.IsChecked == true)
+                    {
+                        TemporaryOccasion.IsPersonal = true;                        
+                        TemporaryOccasion.People.Add((Person)personComboBox.SelectedItem);
+                    }
+                    else
+                    {
+                        foreach (Person person in PeopleRepository.GetAll())
+                        {
+                            TemporaryOccasion.People.Add(person);
+                        }
+                    }
                     OccasionRepository.Add(TemporaryOccasion);
                 }
                 this.Close();

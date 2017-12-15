@@ -70,6 +70,6 @@
         </DatePicker>
         <Button x:Name="saveButton" Content="Save" Margin="150,282,150,27" Grid.Row="1" Click="SaveButton_Click"/>
         <CheckBox x:Name="onePersonCheckBox" Content="Add only for one person" Margin="100,200,100,0" Grid.Row="1" VerticalAlignment="Top" Height="21"/>
-        <ComboBox x:Name="personComboBox" Margin="100,226,100,101" Grid.Row="1" IsEnabled="{Binding ElementName=onePersonCheckBox, Path=IsChecked}"/>
+        <ComboBox x:Name="personComboBox" Margin="100,226,100,101" Grid.Row="1" IsEnabled="{Binding ElementName=onePersonCheckBox, Path=IsChecked}" DisplayMemberPath="Name"/>
     </Grid>
 </Window>
