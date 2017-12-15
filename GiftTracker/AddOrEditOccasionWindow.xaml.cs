@@ -38,7 +38,7 @@ namespace GiftTracker
             PeopleRepository = new GTRepository<Person>(context);
             var ppl = PeopleRepository.GetAll();
             userImageItems.ItemsSource = Directory.EnumerateFiles(@"..\..\Images\DefaultOccasionImages", "*.png");
-            personComboBox.ItemsSource = ppl;
+            personListBox.ItemsSource = new ListCollectionView(ppl);
 
             if (occasion == null)
             {
@@ -97,10 +97,24 @@ namespace GiftTracker
                 }
                 else
                 {
-                    if (onePersonCheckBox.IsChecked == true)
+                    if (severalPersonCheckBox.IsChecked == true)
                     {
-                        TemporaryOccasion.IsPersonal = true;                        
-                        TemporaryOccasion.People.Add((Person)personComboBox.SelectedItem);
+                        int count = 0;
+                        foreach (Person person in PeopleRepository.GetAll())
+                        {
+                            for (int i = 0; i < personListBox.SelectedItems.Count; i++)
+                            {
+                                if (person == personListBox.SelectedItems[i])
+                                {
+                                    TemporaryOccasion.People.Add(person);
+                                    count++;
+                                }
+                            }
+                        }
+                        if (count == personListBox.Items.Count)
+                            TemporaryOccasion.IsForEveryone = true;
+                        else
+                            TemporaryOccasion.IsForEveryone = false;
                     }
                     else
                     {
@@ -108,6 +122,7 @@ namespace GiftTracker
                         {
                             TemporaryOccasion.People.Add(person);
                         }
+                        TemporaryOccasion.IsForEveryone = true;
                     }
                     OccasionRepository.Add(TemporaryOccasion);
                 }

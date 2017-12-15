@@ -97,7 +97,7 @@ namespace GiftTracker
                             Date = TemporaryPerson.Birthday,
                             Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\DefaultOccasionImages\gift.png"),
                             Name = TemporaryPerson.Name + "'s Birthday",
-                            IsPersonal = true
+                            IsForEveryone = false
                         } };
                     TemporaryPerson.Occasions = defaultOccasions;
                     PeopleRepository.Add(TemporaryPerson);

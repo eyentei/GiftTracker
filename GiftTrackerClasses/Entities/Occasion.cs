@@ -17,7 +17,7 @@ namespace GiftTrackerClasses
         [Required]
         public string Name { get; set; }
         [Required]
-        public bool IsPersonal { get; set; } // for one person or for all
+        public bool IsForEveryone { get; set; } // for one person or for all
         [Required]
         public DateTime? Date { get; set; }
         [Required]
