@@ -15,7 +15,6 @@ namespace GiftTrackerClasses
             var peopleRepository = new GTRepository<Person>(context);
             var giftRepository = new GTRepository<Gift>(context);
             var occasionRepository = new GTRepository<Occasion>(context);
-            var generator = new DataGenerator(context);
 
             var newYear = new Occasion
             {

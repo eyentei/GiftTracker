@@ -57,7 +57,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Logic\DataGenerator.cs" />
     <Compile Include="Logic\GTContext.cs" />
     <Compile Include="Logic\ContextInitializer.cs" />
     <Compile Include="Logic\GTRepository.cs" />

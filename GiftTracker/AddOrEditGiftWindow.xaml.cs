@@ -85,6 +85,7 @@ namespace GiftTracker
             personComboBox.IsEnabled = false;
             occasionComboBox.IsEnabled = false;
             onePersonCheckBox.IsEnabled = false;
+            deleteButton.IsEnabled = false;
             if (CurrentGift != null && CurrentGift.WasGiven)
                 hasBeenGivenCheckBox.IsChecked = true;
         }

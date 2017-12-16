@@ -53,7 +53,17 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Width="*" Binding="{Binding Name}"/>
             </DataGrid.Columns>
+            <DataGrid.CellStyle>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding WasGiven}" Value="true">
+                            <Setter Property="Background" Value="LightGray" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
         </DataGrid>
+           
     </Grid>
 
 </Window>
