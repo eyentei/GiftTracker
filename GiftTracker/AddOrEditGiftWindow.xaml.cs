@@ -20,41 +20,73 @@ using PropertyChanged;
 
 namespace GiftTracker
 {
-
+    /// <summary>
+    /// Interaction logic for AddOrEditGiftWindow.xaml
+    /// </summary>
     public partial class AddOrEditGiftWindow : Window
     {
         Gift CurrentGift { get; set; }
         Person CurrentPerson { get; set; }
         Occasion CurrentOccasion { get; set; }
+        GTContext Context { get; set; }
         Gift TemporaryGift { get; set; }
         GTRepository<Gift> GiftRepository { get; set; }
+        GTRepository<Occasion> OccasionRepository { get; set; }
+        GTRepository<Person> PeopleRepository { get; set; }
         bool IsEdited { get; set; }
+        bool IsPersonal { get; set; }
 
         public AddOrEditGiftWindow(GTContext context, Gift gift = null)
         {
             Initialize(context);
             if (gift == null)
             {
-                wasGivenCheckBox.Visibility = Visibility.Hidden;
-                TemporaryGift = new Gift() { WasGiven = false };
+                TemporaryGift = new Gift();
                 NewGift();
+                IsPersonal = false;
+                onePersonCheckBox.IsEnabled = true;
+                deleteButton.IsEnabled = false;
             }
             else
             {
                 CurrentGift = gift;
                 TemporaryGift = new Gift() { Image = gift.Image, Name = gift.Name, WasGiven = gift.WasGiven, Description = gift.Description };
                 IsEdited = true;
+                if (CurrentGift.Owner != null && CurrentGift.Occasion != null)
+                {
+                    IsPersonal = true;
+                    CurrentPerson = CurrentGift.Owner;
+                    CurrentOccasion = CurrentGift.Occasion;
+                }
+                else
+                {
+                    IsPersonal = false;
+                    onePersonCheckBox.IsEnabled = true;
+                }
             }
             this.DataContext = TemporaryGift;
+            
+            OccasionRepository = new GTRepository<Occasion>(context);
+            PeopleRepository = new GTRepository<Person>(context);            
+            Context = context;
+
+            if (CurrentGift != null && CurrentGift.WasGiven)
+                hasBeenGivenCheckBox.IsChecked = true;
         }
         public AddOrEditGiftWindow(GTContext context, Occasion occasion, Person person)
         {
             Initialize(context);
             CurrentPerson = person;
             CurrentOccasion = occasion;
+            IsPersonal = true;
             TemporaryGift = new Gift();
             NewGift();
             this.DataContext = TemporaryGift;
+            personComboBox.IsEnabled = false;
+            occasionComboBox.IsEnabled = false;
+            onePersonCheckBox.IsEnabled = false;
+            if (CurrentGift != null && CurrentGift.WasGiven)
+                hasBeenGivenCheckBox.IsChecked = true;
         }
 
         private void Initialize(GTContext context)
@@ -92,7 +124,7 @@ namespace GiftTracker
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            nameTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            nameTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();            
 
             if (Validation.GetHasError(nameTextBox))
             {
@@ -102,6 +134,11 @@ namespace GiftTracker
             {
                 if (IsEdited)
                 {
+                    if (IsPersonal)
+                    {
+                        CurrentGift.Owner = CurrentPerson;
+                        CurrentGift.Occasion = CurrentOccasion;
+                    }
                     CurrentGift.Image = TemporaryGift.Image;
                     CurrentGift.Name = TemporaryGift.Name;
                     CurrentGift.Description = TemporaryGift.Description;
@@ -110,10 +147,14 @@ namespace GiftTracker
                 }
                 else
                 {
-                    TemporaryGift.Owner = CurrentPerson;
-                    TemporaryGift.Occasion = CurrentOccasion;
+                    if (IsPersonal)
+                    {
+                        TemporaryGift.Owner = CurrentPerson;
+                        TemporaryGift.Occasion = CurrentOccasion;
+                    }
                     GiftRepository.Add(TemporaryGift);
                 }
+                
                 this.Close();
             }
         }
@@ -134,6 +175,63 @@ namespace GiftTracker
                 GiftRepository.Delete(CurrentGift);
                 this.Close();
             }
+        }
+
+        private void personComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (IsPersonal)
+            {
+                foreach (Person person in PeopleRepository.GetAll())
+                {
+                    if (person == personComboBox.SelectedItem)
+                    {
+                        CurrentPerson = person;
+                    }
+                }
+                occasionComboBox.ItemsSource = new ListCollectionView(CurrentPerson.Occasions);
+            }
+        }
+
+        private void onePersonCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            personComboBox.IsEnabled = true;
+            occasionComboBox.IsEnabled = true;
+            IsPersonal = true;
+            var ppl = PeopleRepository.GetAll();
+            personComboBox.ItemsSource = new ListCollectionView(ppl);
+        }
+
+        private void occasionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (IsPersonal)
+            {
+                foreach (Occasion occasion in OccasionRepository.GetAll())
+                {
+                    if (occasion == occasionComboBox.SelectedItem)
+                    {
+                        CurrentOccasion = occasion;
+                    }
+                }
+            }
+        }
+
+        private void onePersonCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            IsPersonal = false;
+            personComboBox.IsEnabled = false;
+            occasionComboBox.IsEnabled = false;
+            CurrentPerson = null;
+            CurrentOccasion = null;
+        }
+
+        private void hasBeenGivenCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            TemporaryGift.WasGiven = true;
+        }
+
+        private void hasBeenGivenCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            TemporaryGift.WasGiven = false;
         }
     }
 }

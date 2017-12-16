@@ -6,12 +6,14 @@
         xmlns:validation="clr-namespace:GiftTrackerClasses;assembly=GiftTrackerClasses"
         xmlns:local="clr-namespace:GiftTracker"
         mc:Ignorable="d"
-        Title="AddOrEditGiftWindow" Height="632" Width="450">
-    <Grid Background="LavenderBlush" Margin="0,0,0,-1">
+        Title="AddOrEditGiftWindow" Height="705" Width="450">
+    <Grid Background="LavenderBlush" >
+
         <Grid.RowDefinitions>
             <RowDefinition Height="300"/>
             <RowDefinition Height="350"/>
         </Grid.RowDefinitions>
+
         <Grid Grid.Row="0">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -44,9 +46,10 @@
                 <Label Content="Or choose your own" HorizontalContentAlignment="Center" Margin="15,225,10,46" Grid.Column="1"/>
                 <Button Margin="15,259,10,10" Content="Browse" Grid.Column="1" Click="BrowseButton_Click"/>
             </Grid>
+
         </Grid>
-        <Label Content="Name of the gift" Margin="150,10,150,308" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1"/>
-        <TextBox x:Name="nameTextBox" Margin="100,45,100,274" Grid.Row="1" TextWrapping="Wrap" LostFocus="OnLostFocus">
+        <Label Content="Name of the gift" Margin="150,0,150,318" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1"/>
+        <TextBox x:Name="nameTextBox" Margin="100,33,100,286" Grid.Row="1" TextWrapping="Wrap" LostFocus="OnLostFocus">
             <TextBox.Text>
                 <Binding Path="Name" UpdateSourceTrigger="LostFocus">
                     <Binding.ValidationRules>
@@ -55,10 +58,16 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Button x:Name="saveButton" Content="Save" Margin="250,253,50,65" Grid.Row="1" Click="SaveButton_Click"/>
-        <Button x:Name="deleteButton" Content="Delete" Margin="50,253,250,65" Grid.Row="1" Click="deleteButton_Click"/>
-        <TextBox Margin="100,115,100,151" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Description}"/>
-        <Label Content="Description" Margin="150,81,150,240" Grid.Row="1" HorizontalContentAlignment="Center"/>
-        <CheckBox IsChecked="{Binding IsGiven}" x:Name="wasGivenCheckBox" Content="Has been given (store it in history)" Margin="100,223,100,102" Grid.Row="1"/>
+        <Button x:Name="saveButton" Content="Save" Margin="150,338,150,-13" Grid.Row="1" Click="SaveButton_Click"/>
+        <Button x:Name="deleteButton" Content="Delete" Margin="150,306,150,20" Grid.Row="1" Click="deleteButton_Click"/>
+        <TextBox Margin="100,95,100,224" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Description}"/>
+        <Label Content="Description" Margin="150,65,150,256" Grid.Row="1" HorizontalContentAlignment="Center"/>
+        <CheckBox IsChecked="{Binding WasGiven}" x:Name="hasBeenGivenCheckBox" Content="Has been given (store it in history)" Margin="100,280,100,45" Grid.Row="1" Checked="hasBeenGivenCheckBox_Checked" Unchecked="hasBeenGivenCheckBox_Unchecked"/>
+        <Label Content="Select an occasion" Grid.Row="1" Margin="100,218,221,105"/>
+        <Label Content="Select a person" Grid.Row="1" Margin="100,158,221,163"/>
+        <ComboBox Name ="personComboBox" IsEnabled="False" DisplayMemberPath="Name" Margin="100,188,100,133" Grid.Row="1" SelectionChanged="personComboBox_SelectionChanged" SelectedIndex="-1"/>
+        <ComboBox Name ="occasionComboBox"  IsEnabled="False" DisplayMemberPath="Name" Grid.Row="1" Margin="100,246,100,76" SelectionChanged="occasionComboBox_SelectionChanged" SelectedIndex="-1"/>
+        <CheckBox x:Name="onePersonCheckBox" IsEnabled="False" Content="Add person" Grid.Row="1" VerticalAlignment="Top" Height="21" Margin="100,137,100,0" Checked="onePersonCheckBox_Checked" Unchecked="onePersonCheckBox_Unchecked"/>
+
     </Grid>
 </Window>
