@@ -20,9 +20,8 @@ namespace GiftTrackerClasses
             var newYear = new Occasion
             {
                 Name = "New Year",
-                Date = new DateTime(9999, 01, 01),
+                Date = new DateTime(1753, 12, 31),
                 Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\DefaultOccasionImages\christmas.png"),
-                IsForEveryone = true
 
             };
 
@@ -52,7 +51,6 @@ namespace GiftTrackerClasses
                     Date = person.Birthday,
                     Name = person.Name + "'s Birthday",
                     Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\DefaultOccasionImages\gift.png"),
-                    IsForEveryone = false
                 });
             }
             

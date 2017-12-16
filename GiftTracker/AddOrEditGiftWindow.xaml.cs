@@ -20,9 +20,7 @@ using PropertyChanged;
 
 namespace GiftTracker
 {
-    /// <summary>
-    /// Interaction logic for AddOrEditGiftWindow.xaml
-    /// </summary>
+
     public partial class AddOrEditGiftWindow : Window
     {
         Gift CurrentGift { get; set; }
@@ -37,13 +35,14 @@ namespace GiftTracker
             Initialize(context);
             if (gift == null)
             {
-                TemporaryGift = new Gift();
+                wasGivenCheckBox.Visibility = Visibility.Hidden;
+                TemporaryGift = new Gift() { WasGiven = false };
                 NewGift();
             }
             else
             {
                 CurrentGift = gift;
-                TemporaryGift = new Gift() { Image = gift.Image, Name = gift.Name, IsGiven = gift.IsGiven, Description = gift.Description };
+                TemporaryGift = new Gift() { Image = gift.Image, Name = gift.Name, WasGiven = gift.WasGiven, Description = gift.Description };
                 IsEdited = true;
             }
             this.DataContext = TemporaryGift;
@@ -106,7 +105,7 @@ namespace GiftTracker
                     CurrentGift.Image = TemporaryGift.Image;
                     CurrentGift.Name = TemporaryGift.Name;
                     CurrentGift.Description = TemporaryGift.Description;
-                    CurrentGift.IsGiven = TemporaryGift.IsGiven;
+                    CurrentGift.WasGiven = TemporaryGift.WasGiven;
                     GiftRepository.Save();
                 }
                 else

@@ -19,7 +19,7 @@ namespace GiftTrackerClasses
         [Required]
         public byte[] Image { get; set; }
         [Required]
-        public bool IsGiven { get; set; }
+        public bool WasGiven { get; set; }
         public Person Owner { get; set; }
         public Occasion Occasion { get; set; }
     }

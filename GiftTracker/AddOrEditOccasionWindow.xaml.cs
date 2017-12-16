@@ -21,24 +21,23 @@ using PropertyChanged;
 
 namespace GiftTracker
 {
-    /// <summary>
-    /// Interaction logic for AddOrEditOccasionWindow.xaml
-    /// </summary>
     public partial class AddOrEditOccasionWindow : Window
     {
         Occasion CurrentOccasion { get; set; }
         Occasion TemporaryOccasion { get; set; }
         GTRepository<Occasion> OccasionRepository { get; set; }
         GTRepository<Person> PeopleRepository { get; set; }
+        ObservableCollection<Person> People { get; set; }
         bool IsEdited { get; set; }
+
         public AddOrEditOccasionWindow(GTContext context, Occasion occasion = null)
         {
             InitializeComponent();
             OccasionRepository = new GTRepository<Occasion>(context);
             PeopleRepository = new GTRepository<Person>(context);
-            var ppl = PeopleRepository.GetAll();
+            People = PeopleRepository.GetAll();
+            severalPeopleListBox.ItemsSource = People;
             userImageItems.ItemsSource = Directory.EnumerateFiles(@"..\..\Images\DefaultOccasionImages", "*.png");
-            personListBox.ItemsSource = new ListCollectionView(ppl);
 
             if (occasion == null)
             {
@@ -50,7 +49,17 @@ namespace GiftTracker
             else
             {
                 CurrentOccasion = occasion;
-                TemporaryOccasion = new Occasion() { Image = occasion.Image, Name = occasion.Name, Date = occasion.Date };
+                TemporaryOccasion = new Occasion() { Image = occasion.Image, Name = occasion.Name, Date = occasion.Date};
+                if (CurrentOccasion.People.Count < People.Count)
+                {
+                    severalPeopleCheckBox.IsChecked = true;
+                    foreach (var person in People)
+                    {
+                        if (CurrentOccasion.People.Contains(person)) {
+                            severalPeopleListBox.SelectedItems.Add(person);
+                        }
+                    }
+                }         
                 IsEdited = true;
             }
             this.DataContext = TemporaryOccasion;
@@ -82,9 +91,20 @@ namespace GiftTracker
             dateDatePicker.GetBindingExpression(DatePicker.SelectedDateProperty).UpdateSource();
 
 
-            if (Validation.GetHasError(nameTextBox) || Validation.GetHasError(dateDatePicker))
+            if (Validation.GetHasError(nameTextBox))
             {
-                MessageBox.Show("Please provide correct data");
+                foreach (var error in Validation.GetErrors(nameTextBox))
+                {
+                    MessageBox.Show(error.ErrorContent.ToString());
+                }
+                
+            }
+            if (Validation.GetHasError(dateDatePicker))
+            {
+                foreach (var error in Validation.GetErrors(dateDatePicker))
+                {
+                    MessageBox.Show(error.ErrorContent.ToString());
+                }
             }
             else
             {
@@ -93,36 +113,25 @@ namespace GiftTracker
                     CurrentOccasion.Image = TemporaryOccasion.Image;
                     CurrentOccasion.Name = TemporaryOccasion.Name;
                     CurrentOccasion.Date = TemporaryOccasion.Date;
+                    if (severalPeopleCheckBox.IsChecked ?? false)
+                    {
+                        CurrentOccasion.People = new ObservableCollection<Person>(severalPeopleListBox.SelectedItems.Cast<Person>());
+                    }
+                    else
+                    {
+                        CurrentOccasion.People = PeopleRepository.GetAll();
+                    }
                     OccasionRepository.Save();
                 }
                 else
                 {
-                    if (severalPersonCheckBox.IsChecked == true)
+                    if (severalPeopleCheckBox.IsChecked ?? false)
                     {
-                        int count = 0;
-                        foreach (Person person in PeopleRepository.GetAll())
-                        {
-                            for (int i = 0; i < personListBox.SelectedItems.Count; i++)
-                            {
-                                if (person == personListBox.SelectedItems[i])
-                                {
-                                    TemporaryOccasion.People.Add(person);
-                                    count++;
-                                }
-                            }
-                        }
-                        if (count == personListBox.Items.Count)
-                            TemporaryOccasion.IsForEveryone = true;
-                        else
-                            TemporaryOccasion.IsForEveryone = false;
+                        TemporaryOccasion.People = new ObservableCollection<Person>(severalPeopleListBox.SelectedItems.Cast<Person>());
                     }
                     else
                     {
-                        foreach (Person person in PeopleRepository.GetAll())
-                        {
-                            TemporaryOccasion.People.Add(person);
-                        }
-                        TemporaryOccasion.IsForEveryone = true;
+                        TemporaryOccasion.People = PeopleRepository.GetAll();
                     }
                     OccasionRepository.Add(TemporaryOccasion);
                 }

@@ -63,7 +63,7 @@
             <DatePicker.SelectedDate>
                 <Binding Path ="Birthday" UpdateSourceTrigger="LostFocus">
                     <Binding.ValidationRules>
-                        <validation:DateValidation/>
+                        <validation:EmptyDateValidation/>
                     </Binding.ValidationRules>
                 </Binding>
             </DatePicker.SelectedDate>

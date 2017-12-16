@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GiftTracker"
         mc:Ignorable="d"
         Title="Main Window" Height="500" Width="350"
-        Closing="OnClose" StateChanged="OnStateChanged" IsVisibleChanged="OnIsVisibleChanged"
+        Closing="OnClose" StateChanged="OnStateChanged" Loaded="OnLoaded"
         Icon="Images\gift.ico">
 
     <Window.Resources>
@@ -23,7 +23,7 @@
         <UniformGrid Columns="4" Margin="5,0">
             <Canvas x:Name="c1"/>
         </UniformGrid>
-        <TabControl x:Name="giftsTabControl" Margin="0,0,0,0">
+        <TabControl x:Name="giftsTabControl" Margin="0,10,0,-10">
             <TabItem x:Name="peopleTabItem" Header="People" Width="{Binding ElementName=c1, Path=ActualWidth}">
                 <Grid x:Name="peopleGrid" Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
@@ -72,9 +72,11 @@
             <TabItem x:Name="settingsTabItem" Header="Settings" Width="{Binding ElementName=c1, Path=ActualWidth}">
                 <Grid>
                     <CheckBox x:Name="notificationsCheckBox" Content="Enable notifications" HorizontalAlignment="Left" Margin="28,19,0,0" VerticalAlignment="Top" Width="198"/>
-                    <ComboBox HorizontalAlignment="Left" Margin="28,85,0,0" VerticalAlignment="Top" Width="198" IsEnabled="{Binding ElementName=notificationsCheckBox, Path=IsChecked}"/>
-                    <Label Content="Notify me:" HorizontalAlignment="Left" Margin="28,54,0,0" VerticalAlignment="Top" Width="124"/>
-
+                    <ComboBox x:Name="notificationsComboBox" HorizontalAlignment="Left" Margin="28,85,0,0" VerticalAlignment="Top" Width="198" IsEnabled="{Binding ElementName=notificationsCheckBox, Path=IsChecked}" SelectedIndex="0"/>
+                    <Label Content="Notify me, starting:" HorizontalAlignment="Left" Margin="28,54,0,0" VerticalAlignment="Top" Width="145"/>
+                    <Button Margin="102,137,110,254" Content="Save" Click="SaveButton_Click"/>
+                    <Label x:Name="savedLabel" HorizontalAlignment="Left" Margin="102,187,0,0" VerticalAlignment="Top" Width="124" Content="Saved!" HorizontalContentAlignment="Center" Visibility="Hidden"/>
+                    <Label Content="before" HorizontalAlignment="Left" Margin="240,85,0,0" VerticalAlignment="Top" Width="49" Height="33"/>
                 </Grid>
             </TabItem>
         </TabControl>

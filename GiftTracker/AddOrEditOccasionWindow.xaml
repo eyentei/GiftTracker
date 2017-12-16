@@ -4,13 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GiftTracker"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:validation="clr-namespace:GiftTrackerClasses;assembly=GiftTrackerClasses"
         mc:Ignorable="d"
-        Title="AddOrEditOccasionWindow" Height="630.5" Width="450">
+        Title="AddOrEditOccasionWindow" Height="681" Width="450">
     <Grid Background="Beige">
         <Grid.RowDefinitions>
-            <RowDefinition Height="228"/>
-            <RowDefinition/>
+            <RowDefinition Height="230"/>
+            <RowDefinition Height="370"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid>
@@ -48,8 +49,8 @@
             </Grid>
         </Grid>
 
-        <Label Content="Name of occasion" Margin="150,10,150,299" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        <TextBox x:Name="nameTextBox" Margin="100,58,100,279" Grid.Row="1" TextWrapping="Wrap" LostFocus="OnLostFocus">
+        <Label Content="Name of occasion" Margin="150,10,150,314" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="nameTextBox" Margin="100,56,100,279" Grid.Row="1" TextWrapping="Wrap" LostFocus="OnLostFocus">
             <TextBox.Text>
                 <Binding Path="Name" UpdateSourceTrigger="LostFocus">
                     <Binding.ValidationRules>
@@ -58,20 +59,19 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Label Content="Date" Margin="150,95,150,0" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="35" VerticalAlignment="Top"/>
-        <DatePicker x:Name="dateDatePicker" Margin="100,135,100,203" Grid.Row="1" LostFocus="OnLostFocus">
+        <Label Content="Date" Margin="150,96,150,0" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="29" VerticalAlignment="Top"/>
+        <DatePicker x:Name="dateDatePicker" Margin="100,132,100,205" Grid.Row="1" LostFocus="OnLostFocus" DisplayDateStart="{x:Static sys:DateTime.Now}">
             <DatePicker.SelectedDate>
                 <Binding Path ="Date" UpdateSourceTrigger="LostFocus">
                     <Binding.ValidationRules>
-                        <validation:DateValidation/>
+                        <validation:IncorrectDateValidation/>
+                        <validation:EmptyDateValidation/>
                     </Binding.ValidationRules>
                 </Binding>
             </DatePicker.SelectedDate>
         </DatePicker>
-        <Button x:Name="saveButton" Content="Save" Margin="150,310,150,27" Grid.Row="1" Click="SaveButton_Click"/>
-        <CheckBox x:Name="severalPersonCheckBox" Content="Add only for several people" Margin="100,200,100,0" Grid.Row="1" VerticalAlignment="Top" Height="21"/>
-
-        <ListBox Name ="personListBox" IsEnabled="{Binding ElementName=severalPersonCheckBox, Path=IsChecked}" SelectionMode="Multiple" Margin="100,226,100,75" Grid.Row="1" DisplayMemberPath="Name">
-        </ListBox>
+        <Button x:Name="saveButton" Content="Save" Margin="150,371,150,-34" Grid.Row="1" Click="SaveButton_Click"/>
+        <CheckBox x:Name="severalPeopleCheckBox" Content="Select specific people" Margin="100,200,100,0" Grid.Row="1" VerticalAlignment="Top" Height="21"/>
+        <ListBox x:Name="severalPeopleListBox" SelectionMode="Multiple" LostFocus="OnLostFocus" IsEnabled="{Binding ElementName=severalPeopleCheckBox, Path=IsChecked}" Margin="100,241,100,26" Grid.Row="1" DisplayMemberPath="Name"/>
     </Grid>
 </Window>

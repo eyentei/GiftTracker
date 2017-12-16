@@ -140,12 +140,13 @@ namespace GiftTracker
                 default:
                     break;
             }
+            Load();
         }
         private void DeleteButtonClicked(object sender, RoutedEventArgs e)
         {
             if (CurrentPerson != null)
             {
-                OccasionsRepository.DeleteRange(CurrentPerson.Occasions.Where(x => !x.IsForEveryone));
+                OccasionsRepository.DeleteRange(CurrentPerson.Occasions.Where(x => x.People.Count == 1));
                 GiftsRepository.DeleteRange(CurrentPerson.Gifts);
                 PeopleRepository.Delete(CurrentPerson);
             }

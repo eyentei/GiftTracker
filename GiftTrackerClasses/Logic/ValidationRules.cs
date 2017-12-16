@@ -15,13 +15,13 @@ namespace GiftTrackerClasses
             var str = value as string;
             if (string.IsNullOrEmpty(str))
             {
-                return new ValidationResult(false, "Please enter some text");
+                return new ValidationResult(false, "Name can't be empty");
             }
 
-            return new ValidationResult(true, null);
+            return ValidationResult.ValidResult;
         }
     }
-    public class DateValidation : ValidationRule
+    public class EmptyDateValidation : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
@@ -30,7 +30,31 @@ namespace GiftTrackerClasses
             {
                 return new ValidationResult(false, "Date can't be empty");
             }
-            return new ValidationResult(true, null);
+            return ValidationResult.ValidResult;
+        }
+    }
+    public class IncorrectDateValidation : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            if ((DateTime)value < DateTime.Now.Date)
+            {
+                return new ValidationResult(false, "Date can't be less than current date");
+            }
+            return ValidationResult.ValidResult;
+        }
+    }
+    public class EmptyCollectionValidation : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            if (value == null)
+            {
+                return new ValidationResult(false, "Please, select at least one");
+            }
+
+            return new ValidationResult(false, value as string);
+
         }
     }
 }
