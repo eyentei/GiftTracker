@@ -127,5 +127,14 @@ namespace GiftTracker
                 BindingOperations.GetBindingExpression(text, TextBox.TextProperty).UpdateSource();
             }
         }
+
+        private void deleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (CurrentGift != null)
+            {
+                GiftRepository.Delete(CurrentGift);
+                this.Close();
+            }
+        }
     }
 }

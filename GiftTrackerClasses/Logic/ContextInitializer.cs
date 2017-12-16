@@ -22,7 +22,7 @@ namespace GiftTrackerClasses
                 Name = "New Year",
                 Date = new DateTime(9999, 01, 01),
                 Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\DefaultOccasionImages\christmas.png"),
-                IsPersonal = false
+                IsForEveryone = true
 
             };
 
@@ -52,7 +52,7 @@ namespace GiftTrackerClasses
                     Date = person.Birthday,
                     Name = person.Name + "'s Birthday",
                     Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\DefaultOccasionImages\gift.png"),
-                    IsPersonal = true
+                    IsForEveryone = false
                 });
             }
             

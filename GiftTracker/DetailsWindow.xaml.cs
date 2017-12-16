@@ -145,7 +145,7 @@ namespace GiftTracker
         {
             if (CurrentPerson != null)
             {
-                OccasionsRepository.DeleteRange(CurrentPerson.Occasions.Where(x => x.IsPersonal));
+                OccasionsRepository.DeleteRange(CurrentPerson.Occasions.Where(x => !x.IsForEveryone));
                 GiftsRepository.DeleteRange(CurrentPerson.Gifts);
                 PeopleRepository.Delete(CurrentPerson);
             }

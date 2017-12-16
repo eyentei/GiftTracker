@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using System.ComponentModel;
 using GiftTrackerClasses;
 using System.Data.Entity;
+using System.Threading;
 
 
 namespace GiftTracker
@@ -58,12 +59,17 @@ namespace GiftTracker
 
         void DataGrid_MouseLeftButtonUp<T>(object sender, MouseButtonEventArgs e)
         {
-            T item = (T)((DataGrid)sender).SelectedItem;
-            ((DataGrid)sender).UnselectAll();
+            T item = (T)((DataGrid)sender).SelectedItem;           
             if (item != null)
             {
-                new DetailsWindow(item, context).ShowDialog();
+                if (item is Person || item is Occasion)
+                    new DetailsWindow(item, context).ShowDialog();
+                else if (item is Gift)
+                {
+                    new AddOrEditGiftWindow(context, (Gift)((DataGrid)sender).SelectedItem).ShowDialog();
+                }
             }
+            ((DataGrid)sender).UnselectAll();
         }
 
         private void SetNotifyIcon()
