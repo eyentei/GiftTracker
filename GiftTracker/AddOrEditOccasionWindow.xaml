@@ -7,11 +7,11 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:validation="clr-namespace:GiftTrackerClasses;assembly=GiftTrackerClasses"
         mc:Ignorable="d"
-        Title="AddOrEditOccasionWindow" Height="681" Width="450">
+        Title="AddOrEditOccasionWindow" Height="700" Width="450">
     <Grid Background="Beige">
         <Grid.RowDefinitions>
             <RowDefinition Height="230"/>
-            <RowDefinition Height="370"/>
+            <RowDefinition Height="470"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid>
@@ -44,13 +44,13 @@
 
                 <Label Content="Select a picture for the occasion" HorizontalContentAlignment="Center" Margin="20,10,20,188" Grid.Column="1"/>
                 <Label Content="Or choose your own" HorizontalContentAlignment="Center" Margin="20,147,20,51" Grid.Column="1"/>
-                <Button Margin="20,183,20,10" Content="Browse" Grid.Column="1" Click="BrowseButton_Click"/>
+                <Button Margin="0,183,20,10" Content="Browse" Grid.Column="1" Click="BrowseButton_Click" HorizontalAlignment="Right" Width="234"/>
 
             </Grid>
         </Grid>
 
-        <Label Content="Name of occasion" Margin="150,10,150,314" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        <TextBox x:Name="nameTextBox" Margin="100,56,100,279" Grid.Row="1" TextWrapping="Wrap" LostFocus="OnLostFocus">
+        <Label Content="Name of occasion" Margin="150,10,150,414" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="nameTextBox" Margin="100,56,100,379" Grid.Row="1" TextWrapping="Wrap" LostFocus="OnLostFocus">
             <TextBox.Text>
                 <Binding Path="Name" UpdateSourceTrigger="LostFocus">
                     <Binding.ValidationRules>
@@ -59,19 +59,19 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Label Content="Date" Margin="150,96,150,0" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="29" VerticalAlignment="Top"/>
-        <DatePicker x:Name="dateDatePicker" Margin="100,132,100,205" Grid.Row="1" LostFocus="OnLostFocus" DisplayDateStart="{x:Static sys:DateTime.Now}">
+        <Label Content="Date" Margin="150,114,150,327" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <DatePicker x:Name="datePicker" Margin="100,148,100,292" Grid.Row="1" LostFocus="OnLostFocus" DisplayDateStart="{x:Static sys:DateTime.Now}">
             <DatePicker.SelectedDate>
                 <Binding Path ="Date" UpdateSourceTrigger="LostFocus">
                     <Binding.ValidationRules>
-                        <validation:IncorrectDateValidation/>
                         <validation:EmptyDateValidation/>
+                        <validation:IncorrectDateValidation/>
                     </Binding.ValidationRules>
                 </Binding>
             </DatePicker.SelectedDate>
         </DatePicker>
-        <Button x:Name="saveButton" Content="Save" Margin="150,371,150,-34" Grid.Row="1" Click="SaveButton_Click"/>
-        <CheckBox x:Name="severalPeopleCheckBox" Content="Select specific people" Margin="100,200,100,0" Grid.Row="1" VerticalAlignment="Top" Height="21"/>
-        <ListBox x:Name="severalPeopleListBox" SelectionMode="Multiple" LostFocus="OnLostFocus" IsEnabled="{Binding ElementName=severalPeopleCheckBox, Path=IsChecked}" Margin="100,241,100,26" Grid.Row="1" DisplayMemberPath="Name"/>
+        <Button x:Name="saveButton" Content="Save" Margin="0,382,150,54" Grid.Row="1" Click="SaveButton_Click" HorizontalAlignment="Right" Width="142"/>
+        <CheckBox x:Name="severalPeopleCheckBox" Content="Select specific people" Margin="100,205,100,0" Grid.Row="1" VerticalAlignment="Top" Height="28"/>
+        <ListBox x:Name="severalPeopleListBox" SelectionMode="Multiple" LostFocus="OnLostFocus" IsEnabled="{Binding ElementName=severalPeopleCheckBox, Path=IsChecked}" Margin="100,238,100,124" Grid.Row="1" DisplayMemberPath="Name"/>
     </Grid>
 </Window>

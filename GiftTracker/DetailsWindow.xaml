@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GiftTracker"
         mc:Ignorable="d"
-        Width="400" Height="450">
+        Width="450" Height="450">
 
     <Window.Resources>
         <Style x:Key="GroupHeaderStyle" TargetType="{x:Type GroupItem}">
@@ -43,27 +43,18 @@
                 </Ellipse.Fill>
             </Ellipse>
             <Label x:Name="itemName" Content="{Binding Name}" HorizontalAlignment="Left" Margin="145,40,0,0" VerticalAlignment="Top" Width="148" Height="70"/>
-            <Button x:Name="editButton"  Content="Edit Person" Margin="298,40,10,80" Click="EditButtonClicked" Tag="Person"/>
-            <Button x:Name="deleteButton" Content="Delete Person" Margin="298,80,10,40" Click="DeleteButtonClicked" Tag="Person"/>
+            <Button x:Name="editButton"  Content="Edit Person" Margin="0,40,10,80" Click="EditButtonClicked" Tag="Person" HorizontalAlignment="Right" Width="84"/>
+            <Button x:Name="deleteButton" Content="Delete Person" Margin="0,80,10,40" Click="DeleteButtonClicked" Tag="Person" HorizontalAlignment="Right" Width="84"/>
         </Grid>
-        <DataGrid x:Name="detailsDataGrid" Margin="10,10,10,64" Grid.Row="1" Style="{StaticResource ReadOnlyDataGridStyle}" MouseLeftButtonUp="DetailsDataGrid_MouseLeftButtonUp">
+        <DataGrid x:Name="detailsDataGrid" Margin="10,10,10,64" RowStyle="{StaticResource GiftDataGrid}" Grid.Row="1" Style="{StaticResource ReadOnlyDataGridStyle}" MouseLeftButtonUp="DetailsDataGrid_MouseLeftButtonUp">
             <DataGrid.GroupStyle>
                 <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyle}"/>
             </DataGrid.GroupStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Width="*" Binding="{Binding Name}"/>
             </DataGrid.Columns>
-            <DataGrid.CellStyle>
-                <Style TargetType="{x:Type DataGridCell}">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding WasGiven}" Value="true">
-                            <Setter Property="Background" Value="LightGray" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </DataGrid.CellStyle>
         </DataGrid>
-           
+
     </Grid>
 
 </Window>

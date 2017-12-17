@@ -37,6 +37,7 @@ namespace GiftTrackerClasses
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
+
             if ((DateTime)value < DateTime.Now.Date)
             {
                 return new ValidationResult(false, "Date can't be less than current date");

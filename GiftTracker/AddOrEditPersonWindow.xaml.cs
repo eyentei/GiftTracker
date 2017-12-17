@@ -87,12 +87,15 @@ namespace GiftTracker
                     CurrentPerson.Image = TemporaryPerson.Image;
                     CurrentPerson.Name = TemporaryPerson.Name;
                     CurrentPerson.Birthday = TemporaryPerson.Birthday;
+                    var birthday = CurrentPerson.Occasions.SingleOrDefault(x => x.Name.EndsWith("Birthday"));
+                    birthday.Name = TemporaryPerson.Name + "'s Birthday";
+                    birthday.Date = TemporaryPerson.Birthday;
                     PeopleRepository.Save();
                 }
                 else
                 {
                     var defaultOccasions = new ObservableCollection<Occasion>() {
-                        OccasionsRepository.GetAll().SingleOrDefault(x => x.Name == "New Year"),
+                        OccasionsRepository.GetAll().Single(x => x.Name == "New Year"),
                         new Occasion {
                             Date = TemporaryPerson.Birthday,
                             Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\DefaultOccasionImages\gift.png"),

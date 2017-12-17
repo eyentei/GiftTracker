@@ -29,7 +29,6 @@ namespace GiftTracker
         public DetailsWindow(object item, GTContext context)
         {
             InitializeComponent();
-            this.SizeToContent = SizeToContent.WidthAndHeight;
             Context = context;
             PeopleRepository = new GTRepository<Person>(context);
             OccasionsRepository = new GTRepository<Occasion>(context);
@@ -42,7 +41,7 @@ namespace GiftTracker
             else if (item is Occasion occasion)
             {
                 CurrentOccasion = occasion;
-                if (CurrentOccasion.Name == "New Year")
+                if (CurrentOccasion.Name == "New Year" || CurrentOccasion.Name.EndsWith("Birthday"))
                 {
                     deleteButton.Visibility = Visibility.Hidden;
                     editButton.Visibility = Visibility.Hidden;
@@ -78,9 +77,11 @@ namespace GiftTracker
                 ListCollectionView lcv = new ListCollectionView(gifts);
 
                 var groupDescription = new PropertyGroupDescription("Occasion.Name");
-                foreach (var occasion in occasions)
-                    groupDescription.GroupNames.Add(occasion.Name);
-
+                if (occasions != null)
+                {
+                    foreach (var occasion in occasions)
+                        groupDescription.GroupNames.Add(occasion.Name);
+                }
                 lcv.GroupDescriptions.Add(groupDescription);
                 detailsDataGrid.ItemsSource = lcv;
             }
@@ -122,6 +123,7 @@ namespace GiftTracker
                 var currentPerson = PeopleRepository.GetAll().SingleOrDefault(x => x.Name == groupName && x.Occasions.Contains(CurrentOccasion));
                 new AddOrEditGiftWindow(Context, CurrentOccasion, currentPerson).ShowDialog();
             }
+            detailsDataGrid.UnselectAll();
         }
         private void EditButtonClicked(object sender, RoutedEventArgs e)
         {
@@ -170,6 +172,7 @@ namespace GiftTracker
             {
                 new AddOrEditGiftWindow(Context, CurrentGift).ShowDialog();
             }
+            detailsDataGrid.UnselectAll();
         }
     }
 }

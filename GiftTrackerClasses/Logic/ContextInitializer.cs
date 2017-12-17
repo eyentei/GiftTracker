@@ -27,8 +27,8 @@ namespace GiftTrackerClasses
             var ppl = new List<Person>() {
                 new Person
             {
-                Name = "Vasya",
-                Birthday = new DateTime(1995, 11, 04),
+                Name = "Masha",
+                Birthday = new DateTime(1995, 12, 20),
                 Gifts = new ObservableCollection<Gift>(),
                 Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\DefaultUserImages\cat_icon.png"),
                 Occasions = new ObservableCollection<Occasion>()
@@ -36,7 +36,7 @@ namespace GiftTrackerClasses
             },
             new Person
             {
-                Name = "Petya",
+                Name = "Petya Petin",
                 Birthday = new DateTime(1996, 04, 14),
                 Gifts = new ObservableCollection<Gift>(),
                 Image = ImageHelper.BitmapSourceToByteArray(@"..\..\Images\DefaultUserImages\male_icon.png"),

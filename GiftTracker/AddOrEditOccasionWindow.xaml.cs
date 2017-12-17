@@ -88,7 +88,7 @@ namespace GiftTracker
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             nameTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            dateDatePicker.GetBindingExpression(DatePicker.SelectedDateProperty).UpdateSource();
+            datePicker.GetBindingExpression(DatePicker.SelectedDateProperty).UpdateSource();
 
 
             if (Validation.GetHasError(nameTextBox))
@@ -99,9 +99,9 @@ namespace GiftTracker
                 }
                 
             }
-            if (Validation.GetHasError(dateDatePicker))
+            if (Validation.GetHasError(datePicker))
             {
-                foreach (var error in Validation.GetErrors(dateDatePicker))
+                foreach (var error in Validation.GetErrors(datePicker))
                 {
                     MessageBox.Show(error.ErrorContent.ToString());
                 }

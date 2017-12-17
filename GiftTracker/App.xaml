@@ -41,5 +41,12 @@
         <Style TargetType="ListBox" BasedOn="{StaticResource CommonStyle}"/>
         <Style TargetType="DatePicker" BasedOn="{StaticResource CommonStyle}"/>
 
+        <Style x:Key="GiftDataGrid" TargetType="{x:Type DataGridRow}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding WasGiven}" Value="true">
+                    <Setter Property="Background" Value="LightGray" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </Application.Resources>
 </Application>

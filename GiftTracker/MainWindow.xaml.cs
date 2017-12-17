@@ -134,8 +134,15 @@ namespace GiftTracker
                 this.Hide();
                 if (NotifyIcon != null)
                 {
-                    var occasion = GetClosestOccasion();
-                    NotifyIcon.BalloonTipText = $"Closest occasion is {occasion.Name} in {(occasion.ClosestDate-DateTime.Now.Date).TotalDays} days";
+                    var occasion = Occasions.OrderBy(x => x.ClosestDate).FirstOrDefault(x => x.ClosestDate >= DateTime.Now.Date);
+                    if (occasion != null)
+                    {
+                        NotifyIcon.BalloonTipText = $"Closest occasion is {occasion.Name} in {(occasion.ClosestDate - DateTime.Now.Date).TotalDays} days";
+                    }
+                    else
+                    {
+                        NotifyIcon.BalloonTipText = "No occasions to show";
+                    }
                     NotifyIcon.ShowBalloonTip(200);
                 }
             }
@@ -143,11 +150,6 @@ namespace GiftTracker
             {
                 StoredWindowState = WindowState;
             }
-        }
-
-        private Occasion GetClosestOccasion()
-        {
-            return Occasions.OrderBy(x => x.ClosestDate).FirstOrDefault(x => x.ClosestDate >= DateTime.Now.Date);
         }
 
         private void ShowNotification(Occasion occasion)
@@ -196,7 +198,8 @@ namespace GiftTracker
                 Settings.Default.NotifyBefore = "";
                 foreach (var occasion in Occasions)
                 {
-                    occasion.Timer.Dispose();
+                    if (occasion.Timer != null)
+                        occasion.Timer.Dispose();
                 }
 
             }
@@ -225,8 +228,8 @@ namespace GiftTracker
 
         private DateTime GetNotificationDate(DateTime date)
         {
-            var nb = Settings.Default.NotifyBefore;
-            switch (nb)
+            var notifyBefore = Settings.Default.NotifyBefore;
+            switch (notifyBefore)
             {
                 case "0":
                     return date.AddDays(-1);
