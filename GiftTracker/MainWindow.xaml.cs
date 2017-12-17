@@ -90,6 +90,14 @@ namespace GiftTracker
                 else if (item is Gift)
                 {
                     new AddOrEditGiftWindow(Context, item as Gift).ShowDialog();
+                    ICollectionView giftsView = CollectionViewSource.GetDefaultView(new GTRepository<Gift>(Context).GetAll());
+                    giftsView.Filter = (o) =>
+                    {
+                        Gift gift = (Gift)o;
+                        return gift.Owner == null && gift.Occasion == null;
+                    };
+
+                    giftsDataGrid.ItemsSource = giftsView;
                 }
             }
             ((DataGrid)sender).UnselectAll();
